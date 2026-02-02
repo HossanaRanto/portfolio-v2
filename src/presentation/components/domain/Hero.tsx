@@ -54,7 +54,7 @@ export function Hero() {
                     className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
                 >
                     <Link 
-                        href="/projects"
+                        href="#projects"
                         className="px-8 py-3 rounded-full bg-black dark:bg-white text-white dark:text-black font-semibold hover:scale-105 transition-transform flex items-center justify-center gap-2"
                     >
                         View Projects <ArrowRight size={20} />
