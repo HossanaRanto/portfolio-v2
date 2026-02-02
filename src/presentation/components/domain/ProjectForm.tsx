@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Project } from "@/domain/entities/Project";
-import { createClient } from "@/infrastructure/supabase/client";
+import { uploadImageAction } from "@/application/use-cases/storage.actions";
 import { createProjectAction, updateProjectAction } from "@/application/use-cases/project.actions";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
@@ -32,22 +32,15 @@ export function ProjectForm({ project }: { project?: Project }) {
             let coverUrl = project?.coverImage || "";
             
             if (coverFile && coverFile.size > 0) {
-                const supabase = createClient();
-                const filename = `${Date.now()}-${coverFile.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-                
-                // Ensure bucket exists or handle error (Assuming 'projects-assets' or 'projects' bucket exists)
-                const { data, error } = await supabase.storage.from('projects').upload(filename, coverFile);
-                
-                if (error) {
-                    console.error('Upload error:', error);
-                    // Fallback or alert? For now log.
-                    // If bucket doesn't exist, this fails.
-                    // Assuming user setups bucket 'projects'
-                }
-
-                if (data) {
-                    const { data: { publicUrl } } = supabase.storage.from('projects').getPublicUrl(filename);
-                    coverUrl = publicUrl;
+                const uploadFormData = new FormData();
+                uploadFormData.append('file', coverFile);
+                try {
+                    coverUrl = await uploadImageAction(uploadFormData);
+                } catch (err) {
+                    console.error('Upload failed:', err);
+                    alert('Image upload failed. See console.');
+                    setLoading(false);
+                    return;
                 }
             }
 
