@@ -1,13 +1,22 @@
-import { getFeaturedProjectsAction } from "@/application/use-cases/project.actions";
-import { ProjectCarousel } from "./ProjectCarousel";
+import { getFeaturedProjectsAction, getProjectsAction } from "@/application/use-cases/project.actions";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { ProjectCard } from "./ProjectCard";
 
 export async function FeaturedProjects() {
-    const projects = await getFeaturedProjectsAction();
+    let projects = await getFeaturedProjectsAction();
 
-    // If no projects (e.g. initial load), we might want to show empty state or nothing
+    // Fallback: If no projects are marked as featured, show the latest ones
+    if (projects.length === 0) {
+        const allProjects = await getProjectsAction();
+        projects = allProjects.slice(0, 3);
+    }
+
+    // If still no projects, don't render the section
     if (projects.length === 0) return null;
+
+    // Limit to 3 for display
+    const displayProjects = projects.slice(0, 3);
 
     return (
         <section className="py-24 px-4 relative">
@@ -29,7 +38,11 @@ export async function FeaturedProjects() {
                     </Link>
                 </div>
                 
-                <ProjectCarousel projects={projects} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {displayProjects.map((project, index) => (
+                        <ProjectCard key={project.id} project={project} index={index} />
+                    ))}
+                </div>
                  
                  <div className="mt-8 md:hidden text-center">
                     <Link href="/projects" className="text-indigo-600 font-medium hover:underline inline-flex items-center gap-2">
