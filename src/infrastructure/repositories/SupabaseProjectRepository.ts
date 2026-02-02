@@ -1,6 +1,6 @@
 import { IProjectRepository } from "@/domain/repositories/IProjectRepository";
 import { Project } from "@/domain/entities/Project";
-import { createClient } from "../supabase/server";
+import { createClient, createAdminClient } from "../supabase/server";
 import { Database } from "../supabase/types";
 
 type ProjectRow = Database['public']['Tables']['projects']['Row'];
@@ -78,7 +78,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
     }
     
     async create(project: Omit<Project, "id" | "createdAt" | "updatedAt">): Promise<Project> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const dbData = this.mapToDb(project);
         const { data, error } = await supabase.from('projects').insert(dbData).select().single();
         if (error) throw new Error(error.message);
@@ -86,7 +86,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
     }
 
     async update(id: string, project: Partial<Project>): Promise<Project> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         // For update, we only map defined fields
         const dbData: ProjectUpdate = {};
         if (project.title !== undefined) dbData.title = project.title;
@@ -109,7 +109,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
     }
 
     async delete(id: string): Promise<void> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const { error } = await supabase.from('projects').delete().eq('id', id);
         if (error) throw new Error(error.message);
     }

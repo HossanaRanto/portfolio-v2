@@ -1,6 +1,6 @@
 import { IExperienceRepository } from "@/domain/repositories/IExperienceRepository";
 import { Experience } from "@/domain/entities/Experience";
-import { createClient } from "../supabase/server";
+import { createClient, createAdminClient } from "../supabase/server";
 import { Database } from "../supabase/types";
 
 type ExperienceRow = Database['public']['Tables']['experiences']['Row'];
@@ -33,7 +33,7 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
     }
 
     async create(experience: Omit<Experience, "id" | "createdAt">): Promise<Experience> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const dbData: ExperienceInsert = {
             role: experience.role,
             company: experience.company,
@@ -51,7 +51,7 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
     }
 
     async update(id: string, experience: Partial<Experience>): Promise<Experience> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const dbData: ExperienceUpdate = {};
         if (experience.role !== undefined) dbData.role = experience.role;
         if (experience.company !== undefined) dbData.company = experience.company;
@@ -70,7 +70,7 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
 
 
     async delete(id: string): Promise<void> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const { error } = await supabase.from('experiences').delete().eq('id', id);
         if (error) throw new Error(error.message);
     }

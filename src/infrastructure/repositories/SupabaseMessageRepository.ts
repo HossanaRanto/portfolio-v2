@@ -1,6 +1,6 @@
 import { IMessageRepository } from "@/domain/repositories/IMessageRepository";
 import { Message } from "@/domain/entities/Message";
-import { createClient } from "../supabase/server";
+import { createClient, createAdminClient } from "../supabase/server";
 import { Database } from "../supabase/types";
 
 type MessageRow = Database['public']['Tables']['messages']['Row'];
@@ -36,20 +36,20 @@ export class SupabaseMessageRepository implements IMessageRepository {
     }
 
     async getAll(): Promise<Message[]> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const { data, error } = await supabase.from('messages').select('*').order('created_at', { ascending: false });
         if (error) throw new Error(error.message);
         return (data as MessageRow[]).map(this.mapToDomain);
     }
 
     async markAsRead(id: string): Promise<void> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const { error } = await supabase.from('messages').update({ read: true }).eq('id', id);
         if (error) throw new Error(error.message);
     }
 
     async delete(id: string): Promise<void> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const { error } = await supabase.from('messages').delete().eq('id', id);
         if (error) throw new Error(error.message);
     }
