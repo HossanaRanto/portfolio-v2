@@ -1,7 +1,9 @@
 import { Hero } from "@/presentation/components/domain/Hero";
 import { FeaturedProjects } from "@/presentation/components/domain/FeaturedProjects";
 import { ExperienceTimeline } from "@/presentation/components/domain/ExperienceTimeline";
+import { ServiceSection } from "@/presentation/components/domain/ServiceSection";
 import { getExperiencesAction } from "@/application/use-cases/experience.actions";
+import { getServicesAction } from "@/application/use-cases/service.actions";
 import { ContactForm } from "@/presentation/components/domain/ContactForm";
 import { Github, Linkedin } from "lucide-react";
 import Link from "next/link";
@@ -38,6 +40,7 @@ export default async function Home(props: Props) {
   const t = translations[lang as 'en' | 'fr'] || translations.en;
 
   const experiences = await getExperiencesAction(lang);
+  const services = await getServicesAction(lang);
   
   return (
     <div>
@@ -46,6 +49,7 @@ export default async function Home(props: Props) {
           <ExperienceTimeline experiences={experiences} />
       )}
       <FeaturedProjects lang={lang} />
+      <ServiceSection services={services} />
       
       {/* Contact Section */}
       <section id="contact" className="min-h-screen py-24 px-4 bg-white dark:bg-black text-zinc-900 dark:text-white font-sans">
