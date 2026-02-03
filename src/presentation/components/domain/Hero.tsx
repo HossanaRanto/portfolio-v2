@@ -5,8 +5,10 @@ import { ArrowRight, ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import { useRef } from "react";
 import { BlurText } from "../ui/blur-text";
 import { DecryptedText } from "../ui/decrypted-text";
+import { useLanguage } from "@/presentation/context/LanguageContext";
 
 export function Hero() {
+    const { t } = useLanguage();
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -65,7 +67,7 @@ export function Hero() {
             >
                 <div className="flex justify-center">
                     <DecryptedText 
-                        text="Available for new projects"
+                        text={t('hero.subtitle')}
                         animateOn="view"
                         speed={50}
                         maxIterations={15}
@@ -73,31 +75,10 @@ export function Hero() {
                     />
                 </div>
 
-                <div className="overflow-visible flex flex-col items-center">
-                    <BlurText 
-                        text="Building Digital"
-                        className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-zinc-900 dark:text-zinc-100 mb-2"
-                        delay={0.2}
-                        animateBy="words"
-                        direction="bottom" 
-                    />
-                    
-                    <div className="relative inline-block mt-2">
-                         <span className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-                             Experiences
-                         </span>
-                         <motion.svg
-                            initial={{ pathLength: 0, opacity: 0 }}
-                            animate={{ pathLength: 1, opacity: 1 }}
-                            transition={{ delay: 1, duration: 1.5, ease: "easeInOut" }}
-                            className="absolute -bottom-2 md:-bottom-4 left-0 w-full h-3 md:h-6 text-indigo-500"
-                            viewBox="0 0 200 9" 
-                            fill="none" 
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M2.00021 6.99998C38.5002 3.49999 104.5 -1.49999 198 4.49999" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                        </motion.svg>
-                    </div>
+                <div className="overflow-visible flex flex-col items-center mb-6">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-indigo-600 to-zinc-900 dark:from-white dark:via-indigo-400 dark:to-white">
+                        {t('hero.title')}
+                    </h1>
                 </div>
 
                 <motion.p 
@@ -106,7 +87,7 @@ export function Hero() {
                     transition={{ delay: 0.6, duration: 0.8 }}
                     className="text-xl md:text-2xl text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto leading-relaxed"
                 >
-                    Senior Full Stack Developer specializing in reliable & scalable applications using React, Next.js and Domain-Driven Design.
+                    {t('hero.description')}
                 </motion.p>
                 
                 <motion.div 
@@ -120,7 +101,7 @@ export function Hero() {
                         onClick={(e) => scrollToSection(e, "projects")}
                         className="group px-8 py-3.5 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold text-lg hover:scale-105 transition-all shadow-xl hover:shadow-2xl hover:shadow-indigo-500/20 flex items-center gap-2"
                     >
-                        View Projects 
+                        {t('hero.cta')} 
                         <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform"/>
                     </Link>
                     
@@ -139,7 +120,7 @@ export function Hero() {
                 className="absolute bottom-10 left-1/2 -translate-x-1/2"
             >
                 <div className="flex flex-col items-center gap-2 text-zinc-400 dark:text-zinc-500">
-                    <span className="text-xs uppercase tracking-widest font-medium">Scroll</span>
+                    <span className="text-xs uppercase tracking-widest font-medium">{t('hero.scroll')}</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

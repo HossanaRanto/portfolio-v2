@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X, Globe } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/presentation/context/LanguageContext";
 
 export function PublicNavbar() {
     const pathname = usePathname();
     const { theme, setTheme } = useTheme();
+    const { language, setLanguage, t } = useLanguage();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -22,9 +24,9 @@ export function PublicNavbar() {
     }, []);
 
     const navLinks = [
-        { href: "/", label: "Home" },
-        { href: "/about", label: "About" },
-        { href: "/contact", label: "Contact" },
+        { href: "/", label: t('nav.projects') },
+        { href: "/about", label: t('nav.about') },
+        { href: "/contact", label: t('nav.contact') },
     ];
 
     return (
@@ -51,13 +53,23 @@ export function PublicNavbar() {
                             {link.label}
                         </Link>
                     ))}
+
+                    <button 
+                        onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors text-sm font-medium"
+                        aria-label="Toggle Language"
+                    >
+                        <Globe size={16} />
+                        <span className="uppercase">{language}</span>
+                    </button>
+
                     <button
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                        className="relative p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                         aria-label="Toggle Theme"
                     >
                         <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                        <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 top-2" />
+                        <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                         <span className="sr-only">Toggle theme</span>
                     </button>
                     {/* Hacky way to handle absolute position of Moon icon inside relative container if needed, but here simple swap works if container is relative. Wait, the button has padding but not relative. */}
@@ -66,6 +78,13 @@ export function PublicNavbar() {
                 
                 {/* Mobile Menu Button */}
                 <div className="md:hidden flex items-center gap-4">
+                     <button 
+                        onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
+                        className="flex items-center gap-1 text-sm font-medium p-2"
+                    >
+                        <span className="uppercase">{language}</span>
+                    </button>
+
                      <button
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                         className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"

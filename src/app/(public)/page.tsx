@@ -7,14 +7,45 @@ import { Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { DecryptedText } from "@/presentation/components/ui/decrypted-text";
 
-export default async function Home() {
-  const experiences = await getExperiencesAction();
+const translations = {
+  en: {
+    title: "Let's Work",
+    title2: "Together",
+    subtitle: "I'm currently available for new projects. Whether you have a question or just want to say hi, I'll try my best to get back to you!",
+    open: "Open to Collaborations",
+    email: "Email",
+    phone: "Phone",
+    social: "Social"
+  },
+  fr: {
+    title: "Travaillons",
+    title2: "Ensemble",
+    subtitle: "Je suis actuellement disponible pour de nouveaux projets. Que vous ayez une question ou que vous vouliez simplement dire bonjour, je ferai de mon mieux pour vous répondre !",
+    open: "Ouvert aux Collaborations",
+    email: "Email",
+    phone: "Téléphone",
+    social: "Réseaux Sociaux"
+  }
+}
+
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function Home(props: Props) {
+  const searchParams = await props.searchParams;
+  const lang = (searchParams.lang as string) || 'en';
+  const t = translations[lang as 'en' | 'fr'] || translations.en;
+
+  const experiences = await getExperiencesAction(lang);
   
   return (
     <div>
       <Hero />
-      <ExperienceTimeline experiences={experiences} />
-      <FeaturedProjects />
+      {experiences && experiences.length > 0 && (
+          <ExperienceTimeline experiences={experiences} />
+      )}
+      <FeaturedProjects lang={lang} />
       
       {/* Contact Section */}
       <section id="contact" className="min-h-screen py-24 px-4 bg-white dark:bg-black text-zinc-900 dark:text-white font-sans">
@@ -26,14 +57,14 @@ export default async function Home() {
                         {/* Title */}
                         <div className="space-y-4">
                              <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-none text-zinc-900 dark:text-white">
-                                <span className="block">Let&apos;s Work</span>
-                                <span className="block text-indigo-600 dark:text-indigo-500">Together</span>
+                                <span className="block">{t.title}</span>
+                                <span className="block text-indigo-600 dark:text-indigo-500">{t.title2}</span>
                             </h1>
                         </div>
 
                          {/* Subtitle */}
                         <div className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl">
-                            <DecryptedText text="I'm currently available for new projects. Whether you have a question or just want to say hi, I'll try my best to get back to you!" animateOn="view" speed={80} />
+                            <DecryptedText text={t.subtitle} animateOn="view" speed={80} />
                         </div>
 
                          {/* Status Badge */}
@@ -42,7 +73,7 @@ export default async function Home() {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
                             </span>
-                            <span className="text-indigo-700 dark:text-indigo-400 font-medium">Open to Collaborations</span>
+                            <span className="text-indigo-700 dark:text-indigo-400 font-medium">{t.open}</span>
                         </div>
 
                         {/* Contact Details */}
@@ -50,7 +81,7 @@ export default async function Home() {
                              {/* Email */}
                             <div className="space-y-2">
                                 <span className="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500">
-                                    Email
+                                    {t.email}
                                 </span>
                                 <div className="block">
                                     <a href="mailto:mahefaniairindra@gmail.com" className="text-lg md:text-xl font-medium text-zinc-900 dark:text-zinc-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
@@ -62,7 +93,7 @@ export default async function Home() {
                              {/* Phone */}
                             <div className="space-y-2">
                                 <span className="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500">
-                                    Phone
+                                    {t.phone}
                                 </span>
                                 <div className="block">
                                     <a href="tel:+268380628561" className="text-lg md:text-xl font-medium text-zinc-900 dark:text-zinc-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
@@ -74,7 +105,7 @@ export default async function Home() {
                              {/* Social */}
                             <div className="space-y-2">
                                 <span className="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500">
-                                    Social
+                                    {t.social}
                                 </span>
                                 <div className="flex gap-4">
                                     <Link href="https://github.com" target="_blank" className="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 border border-zinc-200 dark:border-zinc-800">

@@ -5,8 +5,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Experience } from "@/domain/entities/Experience";
 import { BlurText } from "../ui/blur-text";
 import { DecryptedText } from "../ui/decrypted-text";
+import { useLanguage } from "@/presentation/context/LanguageContext";
 
 export const ExperienceTimeline = ({ experiences }: { experiences: Experience[] }) => {
+  const { t } = useLanguage();
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -26,25 +28,23 @@ export const ExperienceTimeline = ({ experiences }: { experiences: Experience[] 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
-  if (experiences.length === 0) return null;
-
   return (
     <section id="experiences" className="w-full bg-white dark:bg-zinc-950 font-sans md:px-10" ref={containerRef}>
       <div className="max-w-7xl mx-auto py-20 px-4 md:px-8">
          <div className="space-y-4 mb-16">
             <span className="text-indigo-600 font-semibold tracking-wider text-sm uppercase">
-                <DecryptedText text="Professional Journey" animateOn="view" speed={80} />
+                <DecryptedText text={t('experiences.subtitle')} animateOn="view" speed={80} />
             </span>
             <div className="overflow-visible">
                  <BlurText 
-                    text="Work Experience" 
+                    text={t('experiences.title')}
                     className="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-zinc-100"
                     animateBy="words"
                     direction="bottom" 
                 />
             </div>
             <p className="text-zinc-600 dark:text-zinc-400 max-w-lg text-lg">
-                A timeline of my professional career and the roles I have held.
+                {t('experiences.description')}
             </p>
         </div>
 
