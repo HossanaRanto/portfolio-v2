@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Briefcase, FolderGit2, Mail, LayoutDashboard, LogOut, Layers } from "lucide-react";
+import { Briefcase, FolderGit2, Mail, LayoutDashboard, Layers } from "lucide-react";
+import { LogoutButton } from "../auth/LogoutButton";
 
 export function AdminSidebar() {
     return (
@@ -28,7 +29,7 @@ export function AdminSidebar() {
             </nav>
 
              <div className="absolute bottom-4 left-4 right-4">
-                 {/* Logout functionality would be here */}
+                 <LogoutButton />
             </div>
         </aside>
     )
