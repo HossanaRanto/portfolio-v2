@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Briefcase, FolderGit2, Mail, LayoutDashboard, LogOut } from "lucide-react";
+import { Briefcase, FolderGit2, Mail, LayoutDashboard, LogOut, Layers } from "lucide-react";
 
 export function AdminSidebar() {
     return (
@@ -12,6 +12,9 @@ export function AdminSidebar() {
             <nav className="space-y-1">
                 <Link href="/admin" className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white">
                     <LayoutDashboard size={20} /> Dashboard
+                </Link>
+                <Link href="/admin/services" className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white">
+                    <Layers size={20} /> Services
                 </Link>
                 <Link href="/admin/projects" className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white">
                     <FolderGit2 size={20} /> Projects
