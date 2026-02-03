@@ -54,6 +54,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                 technologies: (formData.get('technologies') as string).split(',').map(t => t.trim()).filter(Boolean),
                 demoUrl: formData.get('demoUrl') as string,
                 repoUrl: formData.get('repoUrl') as string,
+                language: formData.get('language') as string,
                 coverImage: coverUrl
             };
 
@@ -74,6 +75,20 @@ export function ProjectForm({ project }: { project?: Project }) {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-zinc-900 p-6 rounded-lg border border-zinc-200 dark:border-zinc-800">
+             {/* Language Selection */}
+             <div className="space-y-2">
+                <label className="text-sm font-medium">Language</label>
+                <select 
+                    name="language" 
+                    defaultValue={project?.language || 'en'}
+                    className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
+                >
+                    <option value="en">English (en)</option>
+                    <option value="fr">French (fr)</option>
+                    {/* Add more languages here */}
+                </select>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Title</label>
