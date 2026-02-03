@@ -3,8 +3,10 @@ import { createMessageAction } from "@/application/use-cases/message.actions";
 import { useState } from "react";
 import { Send, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/presentation/context/LanguageContext";
 
 export function ContactForm() {
+    const { t } = useLanguage();
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
@@ -35,74 +37,74 @@ export function ContactForm() {
             <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="p-8 bg-zinc-900 border border-zinc-800 rounded-2xl text-center"
+                className="p-8 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-center"
             >
-                <h3 className="text-2xl font-bold mb-2 text-white">Message Sent! 🚀</h3>
-                <p className="text-zinc-400 mb-6">Thanks for reaching out. I&apos;ll get back to you as soon as possible.</p>
+                <h3 className="text-2xl font-bold mb-2 text-zinc-900 dark:text-white">{t('contact.sent')}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400 mb-6">{t('contact.thanks')}</p>
                 <button 
                     onClick={() => setSuccess(false)} 
                     className="px-6 py-2 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-500 transition-colors"
                 >
-                    Send another message
+                    {t('contact.sendAnother')}
                 </button>
             </motion.div>
         )
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 bg-zinc-950/50 p-6 md:p-8 rounded-3xl border border-zinc-900/50 backdrop-blur-sm">
+        <form onSubmit={handleSubmit} className="space-y-6 bg-zinc-50 dark:bg-zinc-950/50 p-6 md:p-8 rounded-3xl border border-zinc-200 dark:border-zinc-900/50 backdrop-blur-sm">
             <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-semibold text-zinc-300">
-                    Name
+                <label htmlFor="name" className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    {t('contact.name')}
                 </label>
                 <input 
                     required 
                     type="text" 
                     name="name" 
                     id="name"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/50 border border-zinc-800 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-zinc-600"
-                    placeholder="Your name"
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                    placeholder={t('contact.name')}
                 />
             </div>
 
             <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-semibold text-zinc-300">
-                    Email
+                <label htmlFor="email" className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    {t('contact.email')}
                 </label>
                 <input 
                     required 
                     type="email" 
                     name="email" 
                     id="email"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/50 border border-zinc-800 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-zinc-600"
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                     placeholder="your@email.com"
                 />
             </div>
 
             <div className="space-y-2">
-                 <label htmlFor="subject" className="text-sm font-semibold text-zinc-300">
-                    Subject
+                 <label htmlFor="subject" className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    {t('contact.subject')}
                 </label>
                 <input 
                     type="text" 
                     name="subject" 
                     id="subject"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/50 border border-zinc-800 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-zinc-600"
-                    placeholder="Project inquiry"
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                    placeholder={t('contact.subject')}
                 />
             </div>
 
             <div className="space-y-2">
-                <label htmlFor="content" className="text-sm font-semibold text-zinc-300">
-                    Message
+                <label htmlFor="content" className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    {t('contact.message')}
                 </label>
                 <textarea 
                     required 
                     name="content" 
                     id="content"
                     rows={4}
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/50 border border-zinc-800 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-zinc-600 resize-none"
-                    placeholder="Tell me about your project..."
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600 resize-none"
+                    placeholder={t('contact.message')}
                 />
             </div>
 
@@ -115,7 +117,7 @@ export function ContactForm() {
                     <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                     <>
-                        Send Message
+                        {t('contact.send')}
                         <div className="bg-white/10 rounded-full p-1 group-hover:translate-x-1 transition-transform">
                              <Send className="w-4 h-4" />
                         </div>
