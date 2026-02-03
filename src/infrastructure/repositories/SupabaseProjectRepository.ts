@@ -23,6 +23,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
             repoUrl: data.repo_url || undefined,
             status: (data.status as Project['status']) || 'IN_PROGRESS',
             featured: data.featured || false,
+            language: data.language || 'en',
             createdAt: new Date(data.created_at),
             updatedAt: new Date(data.updated_at)
         };
@@ -44,21 +45,34 @@ export class SupabaseProjectRepository implements IProjectRepository {
         if (project.repoUrl !== undefined) payload.repo_url = project.repoUrl;
         if (project.status !== undefined) payload.status = project.status;
         if (project.featured !== undefined) payload.featured = project.featured;
+        if (project.language !== undefined) payload.language = project.language;
 
         return payload;
     }
 
-    async getAll(): Promise<Project[]> {
+    async getAll(lang?: string): Promise<Project[]> {
         const supabase = await createClient();
-        const { data, error } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
+        let query = supabase.from('projects').select('*').order('created_at', { ascending: false });
+        
+        if (lang) {
+            query = query.eq('language', lang);
+        }
+
+        const { data, error } = await query;
         if (error) throw new Error(error.message);
         return (data as ProjectRow[]).map(this.mapToDomain);
     }
 
 
-    async getFeatured(): Promise<Project[]> {
+    async getFeatured(lang?: string): Promise<Project[]> {
         const supabase = await createClient();
-        const { data, error } = await supabase.from('projects').select('*').eq('featured', true).order('created_at', { ascending: false });
+        let query = supabase.from('projects').select('*').eq('featured', true).order('created_at', { ascending: false });
+        
+        if (lang) {
+            query = query.eq('language', lang);
+        }
+
+        const { data, error } = await query;
         if (error) throw new Error(error.message);
         return (data as ProjectRow[]).map(this.mapToDomain);
     }

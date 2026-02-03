@@ -21,14 +21,22 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
             description: data.description || [],
             logo: data.logo || undefined,
             technologies: data.technologies || [],
+            language: data.language || 'en',
             createdAt: new Date(data.created_at),
         };
     }
 
-    async getAll(): Promise<Experience[]> {
+    async getAll(lang?: string): Promise<Experience[]> {
         const supabase = await createClient();
-        const { data, error } = await supabase.from('experiences').select('*').order('start_date', { ascending: false });
+        let query = supabase.from('experiences').select('*').order('start_date', { ascending: false });
+        
+        if (lang) {
+            query = query.eq('language', lang);
+        }
+
+        const { data, error } = await query;
         if (error) throw new Error(error.message);
+        if (!data) return [];
         return (data as ExperienceRow[]).map(this.mapToDomain);
     }
 
@@ -51,6 +59,7 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
             description: experience.description,
             logo: experience.logo,
             technologies: experience.technologies,
+            language: experience.language,
         };
         const { data, error } = await supabase.from('experiences').insert(dbData).select().single();
         if (error) throw new Error(error.message);
@@ -69,6 +78,7 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
         if (experience.description !== undefined) dbData.description = experience.description;
         if (experience.logo !== undefined) dbData.logo = experience.logo;
         if (experience.technologies !== undefined) dbData.technologies = experience.technologies;
+        if (experience.language !== undefined) dbData.language = experience.language;
 
         const { data, error } = await supabase.from('experiences').update(dbData).eq('id', id).select().single();
         if (error) throw new Error(error.message);

@@ -6,8 +6,8 @@ import { revalidatePath } from "next/cache"
 
 const experienceRepo = new SupabaseExperienceRepository()
 
-export async function getExperiencesAction(): Promise<Experience[]> {
-    return await experienceRepo.getAll()
+export async function getExperiencesAction(lang?: string): Promise<Experience[]> {
+    return await experienceRepo.getAll(lang)
 }
 
 export async function getExperienceByIdAction(id: string): Promise<Experience | null> {

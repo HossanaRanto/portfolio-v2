@@ -6,12 +6,12 @@ import { revalidatePath } from "next/cache"
 
 const projectRepo = new SupabaseProjectRepository()
 
-export async function getProjectsAction(): Promise<Project[]> {
-    return await projectRepo.getAll()
+export async function getProjectsAction(lang?: string): Promise<Project[]> {
+    return await projectRepo.getAll(lang)
 }
 
-export async function getFeaturedProjectsAction(): Promise<Project[]> {
-    return await projectRepo.getFeatured()
+export async function getFeaturedProjectsAction(lang?: string): Promise<Project[]> {
+    return await projectRepo.getFeatured(lang)
 }
 
 export async function getProjectBySlugAction(slug: string): Promise<Project | null> {
