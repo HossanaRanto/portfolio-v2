@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Moon, Sun, Menu, X, Globe } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -36,8 +37,9 @@ export function PublicNavbar() {
             }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                <Link href="/" className="text-2xl font-bold tracking-tighter">
-                    RM<span className="text-indigo-600">.</span>
+                <Link href="/" className="flex items-center gap-2">
+                    <Image src="/img/bitflow.png" alt="Bitflow Logo" width={32} height={32} className="rounded-md" />
+                    <span className="font-bold text-xl tracking-tight">Bitflow</span>
                 </Link>
 
                 {/* Desktop Nav */}
