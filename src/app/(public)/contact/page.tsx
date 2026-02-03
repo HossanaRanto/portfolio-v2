@@ -1,65 +1,86 @@
 import { ContactForm } from "@/presentation/components/domain/ContactForm";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Github, Linkedin, Twitter } from "lucide-react";
+import Link from "next/link";
 
 export default function ContactPage() {
     return (
-        <div className="min-h-screen pt-24 pb-12 px-4">
+        <div className="min-h-screen pt-24 pb-12 px-4 bg-black text-white font-sans">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6">Get in Touch</h1>
-                    <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-                        Have a project in mind or just want to say hi? I&apos;d love to hear from you.
-                    </p>
-                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+                    
+                    {/* LEFT COLUMN */}
+                    <div className="space-y-12 pt-10">
+                        {/* Title */}
+                        <div className="space-y-4">
+                             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-none">
+                                <span className="bg-blue-700 px-4 inline-block transform -rotate-1">Let&apos;s Work</span>
+                                <br />
+                                <span className="bg-blue-700 px-4 inline-block transform rotate-1 mt-2">Together</span>
+                            </h1>
+                        </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
-                    <div>
-                         <div className="mb-12">
-                            <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
-                            <div className="space-y-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
-                                        <Mail size={24} />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-lg">Email</h3>
-                                        <a href="mailto:ranto.dev@example.com" className="text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 transition-colors">
-                                            ranto.dev@example.com
-                                        </a>
-                                    </div>
+                         {/* Subtitle */}
+                        <p className="text-xl md:text-2xl text-zinc-300 leading-relaxed max-w-xl">
+                            I&apos;m currently available for new projects. Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
+                        </p>
+
+                         {/* Status Badge */}
+                        <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-lime-900 bg-lime-900/20">
+                            <span className="relative flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-lime-500"></span>
+                            </span>
+                            <span className="text-lime-400 font-medium">Open to Collaborations</span>
+                        </div>
+
+                        {/* Contact Details */}
+                        <div className="space-y-8">
+                             {/* Email */}
+                            <div className="space-y-2">
+                                <span className="inline-block px-2 py-0.5 bg-blue-700 text-white text-xs font-bold uppercase tracking-wider">
+                                    Email
+                                </span>
+                                <div className="block">
+                                    <a href="mailto:mahefaniairindra@gmail.com" className="text-xl md:text-2xl font-medium bg-blue-900/50 hover:bg-blue-800 px-2 py-1 transition-colors text-blue-100">
+                                        mahefaniairindra@gmail.com
+                                    </a>
                                 </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-purple-600 dark:text-purple-400">
-                                        <Phone size={24} />
-                                    </div>
-                                      <div>
-                                        <h3 className="font-semibold text-lg">Phone</h3>
-                                        <p className="text-zinc-600 dark:text-zinc-400">+261 34 00 000 00</p>
-                                    </div>
+                            </div>
+
+                             {/* Phone */}
+                            <div className="space-y-2">
+                                <span className="inline-block px-2 py-0.5 bg-blue-700 text-white text-xs font-bold uppercase tracking-wider">
+                                    Phone
+                                </span>
+                                <div className="block">
+                                    <a href="tel:+268380628561" className="text-xl md:text-2xl font-medium bg-blue-900/50 hover:bg-blue-800 px-2 py-1 transition-colors text-blue-100">
+                                        +268 38 06 285 61
+                                    </a>
                                 </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="p-3 bg-pink-100 dark:bg-pink-900/30 rounded-lg text-pink-600 dark:text-pink-400">
-                                        <MapPin size={24} />
-                                    </div>
-                                      <div>
-                                        <h3 className="font-semibold text-lg">Location</h3>
-                                        <p className="text-zinc-600 dark:text-zinc-400">Antananarivo, Madagascar</p>
-                                    </div>
+                            </div>
+
+                             {/* Social */}
+                            <div className="space-y-2">
+                                <span className="inline-block px-2 py-0.5 bg-blue-700 text-white text-xs font-bold uppercase tracking-wider">
+                                    Social
+                                </span>
+                                <div className="flex gap-4">
+                                    <Link href="https://github.com" target="_blank" className="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
+                                         <Github className="w-4 h-4" /> GitHub
+                                    </Link>
+                                    <Link href="https://linkedin.com" target="_blank" className="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
+                                         <Linkedin className="w-4 h-4" /> LinkedIn
+                                    </Link>
                                 </div>
                             </div>
                         </div>
-
-                        <div className="p-8 bg-zinc-100 dark:bg-zinc-900 rounded-2xl">
-                             <h3 className="font-bold text-xl mb-4">Availability</h3>
-                             <p className="text-zinc-600 dark:text-zinc-400">
-                                 I am currently available for freelance projects and full-time opportunities.
-                             </p>
-                        </div>
                     </div>
 
-                    <div className="bg-white dark:bg-zinc-950 p-8 rounded-3xl shadow-xl shadow-indigo-500/5 border border-zinc-100 dark:border-zinc-800">
+                    {/* RIGHT COLUMN - FORM */}
+                    <div>
                         <ContactForm />
                     </div>
+
                 </div>
             </div>
         </div>
