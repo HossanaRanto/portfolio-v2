@@ -32,6 +32,13 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
         return (data as ExperienceRow[]).map(this.mapToDomain);
     }
 
+    async getById(id: string): Promise<Experience | null> {
+        const supabase = await createClient();
+        const { data, error } = await supabase.from('experiences').select('*').eq('id', id).single();
+        if (error) return null;
+        return this.mapToDomain(data as ExperienceRow);
+    }
+
     async create(experience: Omit<Experience, "id" | "createdAt">): Promise<Experience> {
         const supabase = await createAdminClient();
         const dbData: ExperienceInsert = {

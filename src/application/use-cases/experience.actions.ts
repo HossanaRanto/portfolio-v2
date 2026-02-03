@@ -10,6 +10,10 @@ export async function getExperiencesAction(): Promise<Experience[]> {
     return await experienceRepo.getAll()
 }
 
+export async function getExperienceByIdAction(id: string): Promise<Experience | null> {
+    return await experienceRepo.getById(id)
+}
+
 export async function createExperienceAction(data: Omit<Experience, 'id' | 'createdAt'>) {
     const experience = await experienceRepo.create(data)
     revalidatePath('/about')

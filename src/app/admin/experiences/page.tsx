@@ -34,10 +34,10 @@ export default async function AdminExperiencesPage() {
                                     {exp.endDate ? new Date(exp.endDate).getFullYear() : 'Present'}
                                 </td>
                                  <td className="px-6 py-4 text-right flex justify-end gap-2">
-                                     {/* Edit not implemented fully yet, checking existence first */}
-                                    <button className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded opacity-50 cursor-not-allowed" title="Not implemented">
+                                     {/* Edit link */}
+                                    <Link href={`/admin/experiences/${exp.id}/edit`} className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors">
                                         <Pencil size={18} />
-                                    </button>
+                                    </Link>
                                     <form action={async () => {
                                         "use server"
                                         await deleteExperienceAction(exp.id)
