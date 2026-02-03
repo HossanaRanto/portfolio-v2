@@ -60,6 +60,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
 
         const { data, error } = await query;
         if (error) throw new Error(error.message);
+        if (!data) return [];
         return (data as ProjectRow[]).map(this.mapToDomain);
     }
 
@@ -74,6 +75,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
 
         const { data, error } = await query;
         if (error) throw new Error(error.message);
+        if (!data) return [];
         return (data as ProjectRow[]).map(this.mapToDomain);
     }
 

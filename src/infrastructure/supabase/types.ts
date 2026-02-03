@@ -23,6 +23,7 @@ export interface Database {
           repo_url: string | null
           status: 'IN_PROGRESS' | 'COMPLETED' | 'ARCHIVED'
           featured: boolean
+          language: string
           created_at: string
           updated_at: string
         }
@@ -39,6 +40,7 @@ export interface Database {
           repo_url?: string | null
           status?: 'IN_PROGRESS' | 'COMPLETED' | 'ARCHIVED'
           featured?: boolean
+          language?: string
           created_at?: string
           updated_at?: string
         }
@@ -55,6 +57,7 @@ export interface Database {
           repo_url?: string | null
           status?: 'IN_PROGRESS' | 'COMPLETED' | 'ARCHIVED'
           featured?: boolean
+          language?: string
           created_at?: string
           updated_at?: string
         }
@@ -71,6 +74,7 @@ export interface Database {
           description: string[] | null
           logo: string | null
           technologies: string[] | null
+          language: string
           created_at: string
         }
         Insert: {
@@ -84,6 +88,7 @@ export interface Database {
           description?: string[] | null
           logo?: string | null
           technologies?: string[] | null
+          language?: string
           created_at?: string
         }
         Update: {
@@ -97,6 +102,7 @@ export interface Database {
           description?: string[] | null
           logo?: string | null
           technologies?: string[] | null
+          language?: string
           created_at?: string
         }
       }
