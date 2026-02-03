@@ -13,7 +13,6 @@ export class SupabaseMessageRepository implements IMessageRepository {
             id: data.id,
             name: data.name,
             email: data.email,
-            phone: data.phone || undefined,
             subject: data.subject || undefined,
             content: data.content,
             read: data.read || false,
@@ -22,11 +21,10 @@ export class SupabaseMessageRepository implements IMessageRepository {
     }
 
     async create(message: Omit<Message, "id" | "createdAt" | "read">): Promise<Message> {
-        const supabase = await createClient();
+        const supabase = await createAdminClient();
         const dbData: MessageInsert = {
             name: message.name,
             email: message.email,
-            phone: message.phone,
             subject: message.subject,
             content: message.content,
         };
