@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google"; // Keep fonts
 import "./globals.css";
+import React from 'react';
 import { ThemeProvider } from "@/presentation/components/layout/ThemeProvider";
+import { LanguageProvider } from "@/presentation/context/LanguageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +36,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <React.Suspense fallback={null}>
+                <LanguageProvider>
+                    {children}
+                </LanguageProvider>
+            </React.Suspense>
           </ThemeProvider>
       </body>
     </html>
