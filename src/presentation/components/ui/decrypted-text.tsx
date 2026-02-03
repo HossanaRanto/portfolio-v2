@@ -35,6 +35,10 @@ export const DecryptedText = ({
   const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
+    setDisplayText(text);
+  }, [text]);
+
+  useEffect(() => {
     if (animateOn === "view" && isInView && !isScrambling) {
       scramble();
     }
@@ -97,7 +101,7 @@ export const DecryptedText = ({
   return (
     <motion.span
       ref={ref}
-      className={`${parentClassName} inline-block whitespace-nowrap`}
+      className={`${parentClassName} inline-block`}
       onMouseEnter={() => {
         if (animateOn === "hover") {
             setIsHovering(true);
