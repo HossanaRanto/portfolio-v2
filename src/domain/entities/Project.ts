@@ -11,6 +11,7 @@ export interface Project {
     repoUrl?: string;
     status: 'COMPLETED' | 'IN_PROGRESS' | 'ARCHIVED';
     featured: boolean;
+    language: string;
     createdAt: Date;
     updatedAt: Date;
 }

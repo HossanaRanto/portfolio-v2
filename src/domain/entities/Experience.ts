@@ -9,5 +9,6 @@ export interface Experience {
     description: string[];
     logo?: string;
     technologies?: string[];
+    language: string;
     createdAt: Date;
 }
