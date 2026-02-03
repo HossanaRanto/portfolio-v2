@@ -63,6 +63,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             'featured.description': { en: 'Showcasing effective solutions and creative experiments.', fr: 'Mise en avant de solutions efficaces et d\'expériences créatives.' },
             'hero.description': { en: 'Senior Full Stack Developer specializing in reliable & scalable applications using React, Next.js and Domain-Driven Design.', fr: 'Développeur Full Stack Senior spécialisé dans les applications fiables et évolutives utilisant React, Next.js et la conception pilotée par le domaine.' },
             'hero.scroll': { en: 'Scroll', fr: 'Défiler' },
+            'services.title': { en: 'My Services', fr: 'Mes Services' },
+            'services.subtitle': { en: 'What I Do', fr: 'Ce que je fais' },
+            'services.description': { en: 'I help specialized brands and startups create high-performing digital products.', fr: 'J\'aide les marques spécialisées et les startups à créer des produits numériques performants.' },
              // Add more keys as needed
         };
         
