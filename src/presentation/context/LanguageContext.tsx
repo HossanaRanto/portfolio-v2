@@ -62,8 +62,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             'featured.title': { en: 'Latest Projects', fr: 'Derniers Projets' },
             'featured.description': { en: 'Showcasing effective solutions and creative experiments.', fr: 'Mise en avant de solutions efficaces et d\'expériences créatives.' },
             'hero.description': { 
-                en: 'I am a Senior Full Stack Developer and the founder of Bitflow. I specialize in building reliable, scalable applications using React, Next.js, and Domain-Driven Design. At Bitflow, we turn complex ideas into high-performing digital realities.', 
-                fr: 'Je suis Développeur Full Stack Senior et fondateur de Bitflow. Je me spécialise dans la création d\'applications fiables et évolutives avec React, Next.js et la conception pilotée par le domaine. Chez Bitflow, nous transformons des idées complexes en réalités numériques performantes.' 
+                en: 'I am a web Full Stack Developer. I specialize in building reliable, scalable applications using React, Next.js, and Domain-Driven Design. At Bitflow, we turn complex ideas into high-performing digital realities.', 
+                fr: 'Je suis Développeur Full Stack. Je me spécialise dans la création d\'applications fiables et évolutives avec React, Next.js et la conception pilotée par le domaine. Chez Bitflow, nous transformons des idées complexes en réalités numériques performantes.' 
             },
             'hero.scroll': { en: 'Scroll', fr: 'Défiler' },
             'services.title': { en: 'My Services', fr: 'Mes Services' },
