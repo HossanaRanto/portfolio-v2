@@ -45,10 +45,17 @@ export default async function Home(props: Props) {
   return (
     <div>
       <Hero />
+      
       {experiences && experiences.length > 0 && (
+        <section id="experiences">
           <ExperienceTimeline experiences={experiences} />
+        </section>
       )}
-      <FeaturedProjects lang={lang} />
+      
+      <section id="projects">
+        <FeaturedProjects lang={lang} />
+      </section>
+      
       <ServiceSection services={services} />
       
       {/* Contact Section */}

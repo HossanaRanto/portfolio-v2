@@ -25,9 +25,10 @@ export function PublicNavbar() {
     }, []);
 
     const navLinks = [
-        { href: "/", label: t('nav.projects') },
+        { href: "/#projects", label: t('nav.projects') },
         { href: "/about", label: t('nav.about') },
-        { href: "/contact", label: t('nav.contact') },
+        { href: "/#experiences", label: t('nav.experiences') ?? "Experiences" }, // Fallback if translation missing
+        { href: "/#contact", label: t('nav.contact') },
     ];
 
     return (
@@ -38,8 +39,8 @@ export function PublicNavbar() {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2">
-                    <Image src="/img/bitflow.png" alt="Bitflow Logo" width={32} height={32} className="rounded-md" />
-                    <span className="font-bold text-xl tracking-tight">Bitflow</span>
+                    <Image src="/img/bitflow.png" alt="Ranto Logo" width={32} height={32} className="rounded-md" />
+                    <span className="font-bold text-xl tracking-tight">Ranto Mahefaniaina</span>
                 </Link>
 
                 {/* Desktop Nav */}
