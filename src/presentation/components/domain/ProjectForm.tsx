@@ -12,6 +12,7 @@ export function ProjectForm({ project }: { project?: Project }) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const [preview, setPreview] = useState<string | null>(project?.coverImage || null);
+    const [galleryPreviews, setGalleryPreviews] = useState<string[]>(project?.images || []);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -21,13 +22,25 @@ export function ProjectForm({ project }: { project?: Project }) {
         }
     };
 
+    const handleGalleryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files) {
+            const newPreviews = Array.from(files).map(file => URL.createObjectURL(file));
+            setGalleryPreviews(prev => [...prev, ...newPreviews]);
+        }
+    };
+    
+    const removeGalleryImage = (index: number) => {
+        setGalleryPreviews(prev => prev.filter((_, i) => i !== index));
+    };
+
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setLoading(true);
         const formData = new FormData(e.currentTarget);
         
         try {
-             // Handle Image Upload
+             // Handle Cover Image Upload
             const coverFile = formData.get('cover_file') as File;
             let coverUrl = project?.coverImage || "";
             
@@ -44,6 +57,24 @@ export function ProjectForm({ project }: { project?: Project }) {
                 }
             }
 
+            // Handle Gallery Uploads
+            const galleryFiles = (formData.getAll('gallery_files') as File[]).filter(f => f.size > 0);
+            
+            // Filter out any existing images that were removed from the preview list
+            // We assume non-blob URLs in galleryPreviews are the existing ones we want to keep
+            const existingImagesToKeep = galleryPreviews.filter(url => !url.startsWith('blob:'));
+            
+            const galleryUrls = [...existingImagesToKeep];
+            
+            if (galleryFiles.length > 0) {
+                for (const file of galleryFiles) {
+                    const uploadFormData = new FormData();
+                    uploadFormData.append('file', file);
+                    const url = await uploadImageAction(uploadFormData);
+                    galleryUrls.push(url);
+                }
+            }
+
             const projectData: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>  = {
                 title: formData.get('title') as string,
                 slug: formData.get('slug') as string,
@@ -55,7 +86,8 @@ export function ProjectForm({ project }: { project?: Project }) {
                 demoUrl: formData.get('demoUrl') as string,
                 repoUrl: formData.get('repoUrl') as string,
                 language: formData.get('language') as string,
-                coverImage: coverUrl
+                coverImage: coverUrl,
+                images: galleryUrls
             };
 
             if (project) {
@@ -139,6 +171,33 @@ export function ProjectForm({ project }: { project?: Project }) {
                         className="text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-900/30 dark:file:text-indigo-400"
                     />
                 </div>
+            </div>
+
+            <div className="space-y-2">
+                <label className="text-sm font-medium">Gallery Images</label>
+                <div className="flex flex-wrap gap-4 mb-2">
+                    {galleryPreviews.map((url, idx) => (
+                        <div key={idx} className="relative w-24 h-16 bg-zinc-100 dark:bg-zinc-800 rounded-md overflow-hidden border border-zinc-200 dark:border-zinc-700 group">
+                            <Image src={url} alt={`Gallery ${idx}`} fill className="object-cover" />
+                            <button
+                                type="button"
+                                onClick={() => removeGalleryImage(idx)}
+                                className="absolute top-1 right-1 p-1 bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                                <X size={12} />
+                            </button>
+                        </div>
+                    ))}
+                </div>
+                <input 
+                    type="file" 
+                    name="gallery_files" 
+                    accept="image/*"
+                    multiple
+                    onChange={handleGalleryChange}
+                    className="text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-900/30 dark:file:text-indigo-400"
+                />
+                <p className="text-xs text-zinc-500">Select multiple images to add to the gallery.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
