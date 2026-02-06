@@ -1,36 +1,35 @@
 "use client";
 
-import { createClient } from "@/infrastructure/supabase/client";
+import { loginAction } from "@/application/use-cases/auth.actions";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+// Removed useRouter as navigation is handled by server action redirect
 
 export function LoginForm() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  // router removed
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
     
-    const supabase = createClient();
-    
-    const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-    });
+    try {
+        const result = await loginAction(formData);
 
-    if (error) {
-      console.error(error);
-      setLoading(false);
-      alert("Login failed: " + error.message);
-    } else {
-        router.push('/admin');
-        router.refresh();
+        if (result?.error) {
+            console.error(result.error);
+            setLoading(false);
+            alert("Login failed: " + result.error);
+        }
+        // If login is successful, the server action will redirect, 
+        // effectively unmounting this component or navigating away.
+    } catch (error) {
+        console.error("Unexpected error:", error);
+        setLoading(false);
+        // Note: If the redirect implementation changes to throw, we might see it here, 
+        // but typically Next.js Server Actions handle redirects gracefully.
     }
   };
 
