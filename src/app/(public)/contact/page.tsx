@@ -1,6 +1,12 @@
 import { ContactForm } from "@/presentation/components/domain/ContactForm";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Contact | Ranto Mahefaniaina",
+    description: "Get in touch with Ranto Mahefaniaina for collaborations, questions, or just to say hi.",
+};
 
 export default function ContactPage() {
     return (

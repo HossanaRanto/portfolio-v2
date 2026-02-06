@@ -8,6 +8,26 @@ import { ContactForm } from "@/presentation/components/domain/ContactForm";
 import { Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { DecryptedText } from "@/presentation/components/ui/decrypted-text";
+import { Metadata } from "next";
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const params = await searchParams;
+  const lang = (params.lang as string) || 'en';
+  
+  return {
+    title: lang === 'fr' ? "Accueil | Ranto Mahefaniaina" : "Home | Ranto Mahefaniaina",
+    description: lang === 'fr' 
+      ? "Porteur de solutions web fiables et créatives." 
+      : "Building reliable and creative web solutions.",
+    alternates: {
+        canonical: '/',
+        languages: {
+            'en': '/?lang=en',
+            'fr': '/?lang=fr',
+        },
+    },
+  };
+}
 
 const translations = {
   en: {
