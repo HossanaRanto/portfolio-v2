@@ -16,19 +16,11 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const searchParams = useSearchParams();
-    // Initialize with search param or default 'en'
-    const [language, setLanguageState] = useState<Language>(searchParams.get('lang') || 'en');
-
-    // Sync state with URL if URL changes (external navigation)
-    useEffect(() => {
-        const paramLang = searchParams.get('lang');
-        if (paramLang && paramLang !== language) {
-            setLanguageState(paramLang);
-        }
-    }, [searchParams]);
+    
+    // Derived state from URL search params
+    const language = (searchParams.get('lang') || 'en') as Language;
 
     const setLanguage = (lang: Language) => {
-        setLanguageState(lang);
         const newParams = new URLSearchParams(searchParams.toString());
         newParams.set('lang', lang);
         router.push(`?${newParams.toString()}`);
@@ -40,6 +32,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             'nav.projects': { en: 'Projects', fr: 'Projets' },
             'nav.about': { en: 'About', fr: 'À Propos' },
             'nav.contact': { en: 'Contact', fr: 'Contact' },
+            'nav.experiences': { en: 'Experiences', fr: 'Expériences' },
             'hero.title': { en: 'Building Digital Experiences', fr: 'Création d\'Expériences Numériques' },
             'hero.subtitle': { en: 'Full Stack Developer', fr: 'Développeur Full Stack' },
             'hero.cta': { en: 'View Work', fr: 'Voir mes projets' },
@@ -62,8 +55,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             'featured.title': { en: 'Latest Projects', fr: 'Derniers Projets' },
             'featured.description': { en: 'Showcasing effective solutions and creative experiments.', fr: 'Mise en avant de solutions efficaces et d\'expériences créatives.' },
             'hero.description': { 
-                en: 'I am a web Full Stack Developer. I specialize in building reliable, scalable applications using React, Next.js, and Domain-Driven Design. At Bitflow, we turn complex ideas into high-performing digital realities.', 
-                fr: 'Je suis Développeur Full Stack. Je me spécialise dans la création d\'applications fiables et évolutives avec React, Next.js et la conception pilotée par le domaine. Chez Bitflow, nous transformons des idées complexes en réalités numériques performantes.' 
+                en: 'I am a web Full Stack Developer. I specialize in building reliable, scalable applications using React, Next.js, and Domain-Driven Design. I turn complex ideas into high-performing digital realities.', 
+                fr: 'Je suis Développeur Full Stack. Je me spécialise dans la création d\'applications fiables et évolutives avec React, Next.js et la conception pilotée par le domaine. Je transforme des idées complexes en réalités numériques performantes.' 
             },
             'hero.scroll': { en: 'Scroll', fr: 'Défiler' },
             'services.title': { en: 'My Services', fr: 'Mes Services' },

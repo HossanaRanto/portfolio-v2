@@ -3,15 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Moon, Sun, Menu, X, Globe } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/presentation/context/LanguageContext";
 
 export function PublicNavbar() {
     const pathname = usePathname();
-    const { theme, setTheme } = useTheme();
     const { language, setLanguage, t } = useLanguage();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,10 +23,10 @@ export function PublicNavbar() {
     }, []);
 
     const navLinks = [
+         { href: "/#experiences", label: t('nav.experiences') },
         { href: "/#projects", label: t('nav.projects') },
-        { href: "/about", label: t('nav.about') },
-        { href: "/#experiences", label: t('nav.experiences') ?? "Experiences" }, // Fallback if translation missing
         { href: "/#contact", label: t('nav.contact') },
+        { href: "/about", label: t('nav.about') },
     ];
 
     return (
@@ -39,7 +37,7 @@ export function PublicNavbar() {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2">
-                    <Image src="/img/bitflow.png" alt="Ranto Logo" width={32} height={32} className="rounded-md" />
+                    <Image src="/img/bitflow.png" alt="Ranto Logo" width={32} height={32} className="rounded-md" hidden/>
                     <span className="font-bold text-xl tracking-tight">Ranto Mahefaniaina</span>
                 </Link>
 
@@ -65,18 +63,6 @@ export function PublicNavbar() {
                         <Globe size={16} />
                         <span className="uppercase">{language}</span>
                     </button>
-
-                    <button
-                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="relative p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                        aria-label="Toggle Theme"
-                    >
-                        <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                        <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                        <span className="sr-only">Toggle theme</span>
-                    </button>
-                    {/* Hacky way to handle absolute position of Moon icon inside relative container if needed, but here simple swap works if container is relative. Wait, the button has padding but not relative. */}
-                    {/* Improved Theme Toggle */}
                 </nav>
                 
                 {/* Mobile Menu Button */}
@@ -88,12 +74,6 @@ export function PublicNavbar() {
                         <span className="uppercase">{language}</span>
                     </button>
 
-                     <button
-                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                    >
-                         {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
-                    </button>
                     <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>

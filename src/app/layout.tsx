@@ -16,8 +16,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "My Portfolio",
-  description: "Modern DDD Portfolio",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://www.rantomahefaniaina.dev'), // Replace with your domain
+  title: {
+    default: "Ranto Mahefaniaina | Full Stack Developer",
+    template: "%s | Ranto Mahefaniaina",
+  },
+  description: "Modern DDD Portfolio of Ranto Mahefaniaina, a Senior Full Stack Developer specializing in React, Next.js, and reliable web solutions.",
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Ranto Mahefaniaina Portfolio',
+    images: [
+        {
+            url: '/img/profile.jpeg', // Using the profile image as default OG image
+            width: 800,
+            height: 600,
+            alt: 'Ranto Mahefaniaina',
+        }
+    ]
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -32,8 +60,8 @@ export default function RootLayout({
       >
         <ThemeProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
+            forcedTheme="dark"
+            enableSystem={false}
             disableTransitionOnChange
           >
             <React.Suspense fallback={null}>
