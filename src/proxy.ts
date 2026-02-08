@@ -3,7 +3,7 @@ import { createServerClient } from "@supabase/ssr";
 
 const AUTHORIZED_EMAIL = "mahefaniainaranto@gmail.com";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,
