@@ -14,8 +14,21 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+    
+}
+
 body {
-    background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Geometric grid background pattern */
+.geometric-grid {
+    background-image:
+        linear-gradient(rgba(99, 102, 241, 0.4) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.4) 1px, transparent 1px),
+        linear-gradient(rgba(99, 102, 241, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.15) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
 }
