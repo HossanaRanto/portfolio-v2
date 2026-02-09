@@ -62,7 +62,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             'services.title': { en: 'My Services', fr: 'Mes Services' },
             'services.subtitle': { en: 'What I Do', fr: 'Ce que je fais' },
             'services.description': { en: 'I help specialized brands and startups create high-performing digital products.', fr: 'J\'aide les marques spécialisées et les startups à créer des produits numériques performants.' },
-             // Add more keys as needed
+            'skills.title': { en: 'Core Skills', fr: 'Compétences Clés' },
+            'skills.subtitle': { en: 'Tech Stack', fr: 'Stack Technique' },
+            'skills.description': { en: 'The technologies and frameworks I use to build modern, scalable applications.', fr: 'Les technologies et frameworks que j\'utilise pour créer des applications modernes et évolutives.' },
         };
         
         return translations[key]?.[language] || translations[key]?.['en'] || key;

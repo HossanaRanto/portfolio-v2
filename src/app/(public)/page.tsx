@@ -2,6 +2,7 @@ import { Hero } from "@/presentation/components/domain/Hero";
 import { FeaturedProjects } from "@/presentation/components/domain/FeaturedProjects";
 import { ExperienceTimeline } from "@/presentation/components/domain/ExperienceTimeline";
 import { ServiceSection } from "@/presentation/components/domain/ServiceSection";
+import { SkillsSection } from "@/presentation/components/domain/SkillsSection";
 import { getExperiencesAction } from "@/application/use-cases/experience.actions";
 import { getServicesAction } from "@/application/use-cases/service.actions";
 import { ContactForm } from "@/presentation/components/domain/ContactForm";
@@ -72,14 +73,16 @@ export default async function Home(props: Props) {
         </section>
       )}
       
+      <SkillsSection />
+
       <section id="projects">
         <FeaturedProjects lang={lang} />
       </section>
-      
+
       <ServiceSection services={services} />
       
       {/* Contact Section */}
-      <section id="contact" className="min-h-screen py-24 px-4 bg-white dark:bg-black text-zinc-900 dark:text-white font-sans">
+      <section id="contact" className="min-h-screen py-24 px-4 text-zinc-900 dark:text-white font-sans">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
                     
