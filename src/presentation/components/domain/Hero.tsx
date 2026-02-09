@@ -1,7 +1,7 @@
 "use client"
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { useRef } from "react";
 import { BlurText } from "../ui/blur-text";
 import { DecryptedText } from "../ui/decrypted-text";
@@ -29,7 +29,7 @@ export function Hero() {
     return (
         <section ref={ref} className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
             {/* Background effects */}
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-200/20 via-zinc-100/20 to-zinc-50 dark:from-indigo-900/40 dark:via-zinc-900/40 dark:to-black">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-200/20 via-zinc-100/20 to-transparent dark:from-indigo-900/40 dark:via-zinc-900/40 dark:to-transparent">
                 {/* Dot Grid Pattern */}
                 <div 
                     className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
@@ -104,12 +104,6 @@ export function Hero() {
                         {t('hero.cta')} 
                         <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform"/>
                     </Link>
-                    
-                    <div className="flex items-center gap-4">
-                        <SocialLink href="https://github.com" icon={<Github size={20} />} label="GitHub" />
-                        <SocialLink href="https://linkedin.com" icon={<Linkedin size={20} />} label="LinkedIn" />
-                        <SocialLink href="/contact" icon={<Mail size={20} />} label="Email" />
-                    </div>
                 </motion.div>
             </motion.div>
 
@@ -130,19 +124,5 @@ export function Hero() {
                 </div>
             </motion.div>
         </section>
-    )
-}
-
-function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
-    return (
-        <a 
-            href={href}
-            target={href.startsWith('http') ? '_blank' : undefined}
-            rel="noopener noreferrer"
-            className="p-3 rounded-full bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-zinc-700 transition-all border border-zinc-200 dark:border-zinc-700 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-1"
-            aria-label={label}
-        >
-            {icon}
-        </a>
     )
 }

@@ -29,7 +29,7 @@ export const ExperienceTimeline = ({ experiences }: { experiences: Experience[] 
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
   return (
-    <section id="experiences" className="w-full bg-white dark:bg-zinc-950 font-sans md:px-10" ref={containerRef}>
+    <section id="experiences" className="w-full font-sans md:px-10" ref={containerRef}>
       <div className="max-w-7xl mx-auto py-20 px-4 md:px-8">
          <div className="space-y-4 mb-16">
             <span className="text-indigo-600 font-semibold tracking-wider text-sm uppercase">
