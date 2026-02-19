@@ -37,21 +37,6 @@ export default function ContactPage() {
                             </span>
                             <span className="text-lime-400 font-medium">Open to Collaborations</span>
                         </div>
-
-                        {/* Contact Details */}
-                        <div className="space-y-8">
-                             {/* Email */}
-                            <div className="space-y-2">
-                                <span className="inline-block px-2 py-0.5 bg-blue-700 text-white text-xs font-bold uppercase tracking-wider">
-                                    Email
-                                </span>
-                                <div className="block">
-                                    <a href="mailto:mahefaniairindra@gmail.com" className="text-xl md:text-2xl font-medium bg-blue-900/50 hover:bg-blue-800 px-2 py-1 transition-colors text-blue-100">
-                                        mahefaniairindra@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     {/* RIGHT COLUMN - FORM */}
