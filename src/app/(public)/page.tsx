@@ -108,21 +108,6 @@ export default async function Home(props: Props) {
                             </span>
                             <span className="text-indigo-700 dark:text-indigo-400 font-medium">{t.open}</span>
                         </div>
-
-                        {/* Contact Details */}
-                        <div className="space-y-8">
-                             {/* Email */}
-                            <div className="space-y-2">
-                                <span className="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500">
-                                    {t.email}
-                                </span>
-                                <div className="block">
-                                    <a href="mailto:mahefaniairindra@gmail.com" className="text-lg md:text-xl font-medium text-zinc-900 dark:text-zinc-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                                        mahefaniairindra@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     {/* RIGHT COLUMN - FORM */}
