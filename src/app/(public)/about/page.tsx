@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Linkedin, Mail } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -39,26 +39,6 @@ export default function AboutPage() {
                     </p>
                     
                     <div className="flex gap-4">
-                        <Link 
-                            href="mailto:mahefaniainaranto@gmail.com" 
-                            className="p-3 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-indigo-500 hover:text-white transition-all text-zinc-600 dark:text-zinc-400"
-                        >
-                            <Mail size={20} />
-                        </Link>
-                        <Link 
-                            href="https://github.com/HossanaRanto" 
-                            target="_blank"
-                            className="p-3 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-900 hover:text-white transition-all text-zinc-600 dark:text-zinc-400"
-                        >
-                            <Github size={20} />
-                        </Link>
-                        <Link 
-                            href="https://www.linkedin.com/in/ranto-hossana-mahefaniaina-58aa87254/" 
-                            target="_blank"
-                            className="p-3 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-blue-600 hover:text-white transition-all text-zinc-600 dark:text-zinc-400"
-                        >
-                            <Linkedin size={20} />
-                        </Link>
                     </div>
                 </div>
             </section>
