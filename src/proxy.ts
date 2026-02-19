@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const AUTHORIZED_EMAIL = "mahefaniainaranto@gmail.com";
+const AUTHORIZED_EMAIL = process.env.AUTHORIZED_EMAIL || "";
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({
