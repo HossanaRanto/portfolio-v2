@@ -58,6 +58,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
                 en: 'I am a web Full Stack Developer. I specialize in building reliable, scalable applications using React, Next.js, and Domain-Driven Design. I turn complex ideas into high-performing digital realities.', 
                 fr: 'Je suis Développeur Full Stack. Je me spécialise dans la création d\'applications fiables et évolutives avec React, Next.js et la conception pilotée par le domaine. Je transforme des idées complexes en réalités numériques performantes.' 
             },
+            'hero.logoDescription': { en: 'Crafted with passion & precision', fr: 'Conçu avec passion & précision' },
             'hero.scroll': { en: 'Scroll', fr: 'Défiler' },
             'services.title': { en: 'My Services', fr: 'Mes Services' },
             'services.subtitle': { en: 'What I Do', fr: 'Ce que je fais' },

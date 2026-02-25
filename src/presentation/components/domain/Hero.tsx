@@ -1,5 +1,6 @@
 "use client"
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { useRef } from "react";
@@ -65,8 +66,26 @@ export function Hero() {
                 style={{ y, opacity }}
                 className="text-center z-10 px-4 max-w-5xl mx-auto space-y-8"
             >
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6 }}
+                    className="flex flex-col items-center gap-3"
+                >
+                    <Image
+                        src="/img/rumi.png"
+                        alt="Rumi Logo"
+                        width={150}
+                        height={150}
+                        className="shadow-lg shadow-indigo-500/20"
+                    />
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400 tracking-wide">
+                        {t('hero.logoDescription')}
+                    </p>
+                </motion.div>
+
                 <div className="flex justify-center">
-                    <DecryptedText 
+                    <DecryptedText
                         text={t('hero.subtitle')}
                         animateOn="view"
                         speed={50}

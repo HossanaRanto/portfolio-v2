@@ -37,7 +37,7 @@ export function PublicNavbar() {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2">
-                    <Image src="/img/bitflow.png" alt="Ranto Logo" width={32} height={32} className="rounded-md" hidden/>
+                    <Image src="/img/rumi.png" alt="Ranto Logo" width={100} height={50}/>
                     <span className="font-bold text-xl tracking-tight">Ranto Mahefaniaina</span>
                 </Link>
 
