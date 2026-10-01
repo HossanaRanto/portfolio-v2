@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Briefcase, FolderGit2, Mail, LayoutDashboard, Layers } from "lucide-react";
+import { Briefcase, FolderGit2, Mail, LayoutDashboard, Layers, Cpu } from "lucide-react";
 import { LogoutButton } from "../auth/LogoutButton";
 
 export function AdminSidebar() {
@@ -22,6 +22,9 @@ export function AdminSidebar() {
                 </Link>
                 <Link href="/admin/experiences" className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white">
                     <Briefcase size={20} /> Experiences
+                </Link>
+                <Link href="/admin/skills" className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white">
+                    <Cpu size={20} /> Skills
                 </Link>
                 <Link href="/admin/messages" className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white">
                     <Mail size={20} /> Messages

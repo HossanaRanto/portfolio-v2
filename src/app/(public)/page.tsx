@@ -5,6 +5,7 @@ import { ServiceSection } from "@/presentation/components/domain/ServiceSection"
 import { SkillsSection } from "@/presentation/components/domain/SkillsSection";
 import { getExperiencesAction } from "@/application/use-cases/experience.actions";
 import { getServicesAction } from "@/application/use-cases/service.actions";
+import { getSkillsAction } from "@/application/use-cases/skill.actions";
 import { ContactForm } from "@/presentation/components/domain/ContactForm";
 import Link from "next/link";
 import { DecryptedText } from "@/presentation/components/ui/decrypted-text";
@@ -61,6 +62,7 @@ export default async function Home(props: Props) {
 
   const experiences = await getExperiencesAction(lang);
   const services = await getServicesAction(lang);
+  const skills = await getSkillsAction();
   
   return (
     <div>
@@ -72,7 +74,7 @@ export default async function Home(props: Props) {
         </section>
       )}
       
-      <SkillsSection />
+      {skills.length > 0 && <SkillsSection skills={skills} />}
 
       <section id="projects">
         <FeaturedProjects lang={lang} />
