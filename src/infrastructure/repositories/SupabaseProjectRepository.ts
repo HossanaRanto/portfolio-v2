@@ -116,6 +116,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
         if (project.repoUrl !== undefined) dbData.repo_url = project.repoUrl;
         if (project.status !== undefined) dbData.status = project.status;
         if (project.featured !== undefined) dbData.featured = project.featured;
+        if (project.language !== undefined) dbData.language = project.language;
         
         dbData.updated_at = new Date().toISOString();
 
