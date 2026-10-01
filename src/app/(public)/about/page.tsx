@@ -1,13 +1,16 @@
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { getProfilePhotoAction } from "@/application/use-cases/profile.actions";
 
 export const metadata = {
     title: "About Me | Ranto Mahefaniaina",
     description: "Learn more about Ranto Mahefaniaina's journey, interests, and background.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+    const photoUrl = await getProfilePhotoAction();
+
     return (
         <div className="container mx-auto px-4 py-20 min-h-screen space-y-24">
             
@@ -15,7 +18,7 @@ export default function AboutPage() {
             <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div className="relative aspect-square md:aspect-[4/5] w-full max-w-md mx-auto md:ml-auto rounded-2xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 rotate-3 hover:rotate-0 transition-transform duration-500">
                     <Image 
-                        src="/img/profile.jpeg"
+                        src={photoUrl}
                         alt="Ranto Mahefaniaina"
                         fill
                         className="object-cover"
