@@ -7,6 +7,7 @@ import { Menu, X, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/presentation/context/LanguageContext";
+import { localizedPath, normalizeLanguage } from "@/lib/seo-routes.mjs";
 
 export function PublicNavbar() {
     const pathname = usePathname();
@@ -22,12 +23,13 @@ export function PublicNavbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const lang = normalizeLanguage(language);
     const navLinks = [
-         { href: "/#experiences", label: t('nav.experiences') },
-        { href: "/#projects", label: t('nav.projects') },
-        { href: "/#contact", label: t('nav.contact') },
-        { href: "/about", label: t('nav.about') },
-        { href: `/cv?lang=${language}`, label: t('nav.cv') },
+        { href: localizedPath("/experiences", lang), label: t('nav.experiences') },
+        { href: localizedPath("/projects", lang), label: t('nav.projects') },
+        { href: localizedPath("/contact", lang), label: t('nav.contact') },
+        { href: localizedPath("/about", lang), label: t('nav.about') },
+        { href: localizedPath("/cv", lang), label: t('nav.cv') },
     ];
 
     return (
@@ -37,7 +39,7 @@ export function PublicNavbar() {
             }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                <Link href="/" className="flex items-center gap-2">
+                <Link href={localizedPath("/", lang)} className="flex items-center gap-2">
                     <Image src="/img/rumi.png" alt="Ranto Logo" width={100} height={50}/>
                     <span className="font-bold text-xl tracking-tight">Ranto Mahefaniaina</span>
                 </Link>

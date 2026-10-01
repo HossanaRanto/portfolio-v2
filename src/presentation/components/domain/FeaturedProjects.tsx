@@ -1,5 +1,6 @@
 import { getProjectsAction } from "@/application/use-cases/project.actions";
 import { ProjectCard } from "./ProjectCard";
+import { localizedPath, normalizeLanguage } from "@/lib/seo";
 
 const translations = {
     en: {
@@ -14,7 +15,8 @@ const translations = {
     }
 }
 
-export async function FeaturedProjects({ lang }: { lang?: string }) {
+/** Project grid; each card links to `<basePath>?project=<id>`, which opens the popup. */
+export async function FeaturedProjects({ lang, basePath = '/', asPageHeading = false }: { lang?: string; basePath?: string; asPageHeading?: boolean }) {
     const projects = await getProjectsAction(lang);
     const t = translations[(lang as 'en' | 'fr') || 'en'];
 
@@ -27,7 +29,9 @@ export async function FeaturedProjects({ lang }: { lang?: string }) {
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
                     <div className="space-y-4">
                         <span className="text-indigo-600 font-semibold tracking-wider text-sm uppercase">{t.subtitle}</span>
-                        <h2 className="text-3xl md:text-5xl font-bold">{t.title}</h2>
+                        {asPageHeading
+                            ? <h1 className="text-3xl md:text-5xl font-bold">{t.title}</h1>
+                            : <h2 className="text-3xl md:text-5xl font-bold">{t.title}</h2>}
                         <p className="text-zinc-600 dark:text-zinc-400 max-w-lg">
                             {t.description}
                         </p>
@@ -36,7 +40,7 @@ export async function FeaturedProjects({ lang }: { lang?: string }) {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project, index) => (
-                        <ProjectCard key={project.id} project={project} index={index} />
+                        <ProjectCard key={project.id} project={project} index={index} href={localizedPath(basePath, normalizeLanguage(lang), { project: project.id })} />
                     ))}
                 </div>
              </div>

@@ -4,24 +4,20 @@ import { toPlainText } from "@/lib/rich-text";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/presentation/components/ui/dialog";
-import { ProjectDetails } from "./ProjectDetails";
+import Link from "next/link";
 
-export function ProjectCard({ project, index }: { project: Project; index: number }) {
+const MotionLink = motion.create(Link);
+
+/** A crawlable link to the project's popup URL (e.g. /projects?project=<id>). */
+export function ProjectCard({ project, index, href }: { project: Project; index: number; href: string }) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <motion.button
+        <MotionLink
+          href={href}
+          scroll={false}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
-          className="group w-full text-left h-full focus:outline-none"
+          className="group block w-full text-left h-full focus:outline-none"
         >
           <article className="relative h-full flex flex-col overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-white/20 dark:bg-black/20 dark:border-white/10 dark:hover:bg-black/30">
             {/* Glass sheen effect */}
@@ -80,25 +76,6 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
               </div>
             </div>
           </article>
-        </motion.button>
-      </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[95vw]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold sr-only">{project.title}</DialogTitle>
-           {/* Visual title is inside ProjectDetails or we can move it here. 
-               For semantic purpose, DialogTitle is required. I'll put it here.
-               And ProjectDetails will handle the rest layout.
-           */}
-            <div className="flex flex-col gap-1 pb-4 text-left">
-                <h2 className="text-2xl font-bold tracking-tight">{project.title}</h2>
-                <div className="text-sm text-zinc-500 dark:text-zinc-400">
-                    Published on {new Date(project.createdAt).toLocaleDateString()}
-                </div>
-            </div>
-        </DialogHeader>
-        <ProjectDetails project={project} />
-      </DialogContent>
-    </Dialog>
-
+        </MotionLink>
   );
 }

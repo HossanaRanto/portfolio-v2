@@ -10,23 +10,34 @@ import { ContactForm } from "@/presentation/components/domain/ContactForm";
 import Link from "next/link";
 import { DecryptedText } from "@/presentation/components/ui/decrypted-text";
 import { Metadata } from "next";
+import { ProjectDialog } from "@/presentation/components/domain/ProjectDialog";
+import { ExperienceDialog } from "@/presentation/components/domain/ExperienceDialog";
+import {
+  experienceMetadata, findExperienceWithTranslations, findProjectWithTranslations, projectMetadata,
+} from "@/presentation/seo/detail-metadata";
+import { buildAlternates, localizedPath, normalizeLanguage, OG_LOCALES } from "@/lib/seo";
+import { mergeTags } from "@/lib/tags";
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
-  const lang = (params.lang as string) || 'en';
-  
+  const lang = normalizeLanguage(params.lang as string);
+
+  // A popup opened from the home page shares its canonical /projects or /experiences URL
+  const project = typeof params.project === 'string' ? await findProjectWithTranslations(params.project) : null;
+  if (project) return projectMetadata(project.project, project.versions);
+  const experience = typeof params.experience === 'string' ? await findExperienceWithTranslations(params.experience) : null;
+  if (experience) return experienceMetadata(experience.experience, experience.versions);
+
+  const [services, skills] = await Promise.all([getServicesAction(lang), getSkillsAction()]);
+
   return {
-    title: lang === 'fr' ? "Accueil | Ranto Mahefaniaina" : "Home | Ranto Mahefaniaina",
-    description: lang === 'fr' 
-      ? "Porteur de solutions web fiables et créatives." 
+    title: lang === 'fr' ? "Accueil" : "Home",
+    description: lang === 'fr'
+      ? "Porteur de solutions web fiables et créatives."
       : "Building reliable and creative web solutions.",
-    alternates: {
-        canonical: '/',
-        languages: {
-            'en': '/?lang=en',
-            'fr': '/?lang=fr',
-        },
-    },
+    keywords: mergeTags(skills.map(s => s.name), ...services.map(s => [s.title, ...s.tags])),
+    alternates: buildAlternates('/', lang),
+    openGraph: { url: localizedPath('/', lang), locale: OG_LOCALES[lang] },
   };
 }
 
@@ -57,15 +68,21 @@ type Props = {
 
 export default async function Home(props: Props) {
   const searchParams = await props.searchParams;
-  const lang = (searchParams.lang as string) || 'en';
+  const lang = normalizeLanguage(searchParams.lang as string);
   const t = translations[lang as 'en' | 'fr'] || translations.en;
 
-  const experiences = await getExperiencesAction(lang);
-  const services = await getServicesAction(lang);
-  const skills = await getSkillsAction();
+  const [experiences, services, skills, openProject, openExperience] = await Promise.all([
+    getExperiencesAction(lang),
+    getServicesAction(lang),
+    getSkillsAction(),
+    typeof searchParams.project === 'string' ? findProjectWithTranslations(searchParams.project) : null,
+    typeof searchParams.experience === 'string' ? findExperienceWithTranslations(searchParams.experience) : null,
+  ]);
   
   return (
     <div>
+      <ProjectDialog project={openProject?.project ?? null} closeHref={localizedPath('/', lang)} />
+      <ExperienceDialog experience={openExperience?.experience ?? null} closeHref={localizedPath('/', lang)} />
       <Hero />
       
       {experiences && experiences.length > 0 && (

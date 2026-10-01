@@ -31,9 +31,14 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DialogPortal>
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    /** Render in place instead of a portal, so an initially-open dialog is in the server HTML (SEO). */
+    inline?: boolean
+  }
+>(({ className, children, inline, ...props }, ref) => {
+  const Container = inline ? React.Fragment : DialogPortal
+  return (
+  <Container>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
@@ -49,8 +54,9 @@ const DialogContent = React.forwardRef<
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
-  </DialogPortal>
-))
+  </Container>
+  )
+})
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
 const DialogHeader = ({

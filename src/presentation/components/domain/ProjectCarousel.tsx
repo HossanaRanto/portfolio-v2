@@ -2,6 +2,7 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import { Project } from "@/domain/entities/Project";
 import { toPlainText } from "@/lib/rich-text";
+import { localizedPath } from "@/lib/seo-routes.mjs";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -14,7 +15,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
             <div className="flex -ml-6 py-4">
                 {projects.map(project => (
                     <div className="flex-[0_0_85%] md:flex-[0_0_45%] lg:flex-[0_0_35%] min-w-0 pl-6" key={project.id}>
-                         <Link href={`/projects/${project.slug}`} className="block group h-full">
+                         <Link href={localizedPath("/projects", project.language, { project: project.id })} className="block group h-full">
                             <article className="h-full flex flex-col p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 transition-all hover:shadow-lg hover:border-indigo-500/30 dark:hover:border-indigo-500/30">
                                 <div className="relative aspect-video rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 mb-4">
                                     {project.coverImage ? (

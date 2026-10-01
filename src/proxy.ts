@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { localizedPath } from "@/lib/seo-routes.mjs";
 
 const AUTHORIZED_EMAIL = process.env.AUTHORIZED_EMAIL || "";
 
@@ -34,6 +35,23 @@ export async function proxy(request: NextRequest) {
       },
     }
   );
+
+  // Legacy detail URLs -> /projects?project=<id> and /experiences?experience=<id>.
+  // Done here (not in the page) so crawlers get a real 308 instead of a streamed client redirect.
+  const legacy = request.nextUrl.pathname.match(/^\/(projects|experiences)\/([^/]+)\/?$/);
+  if (legacy) {
+    const [, section, key] = legacy;
+    const { data } = section === "projects"
+      ? await supabase.from("projects").select("id, language").eq("slug", key).maybeSingle()
+      : await supabase.from("experiences").select("id, language").eq("id", key).maybeSingle();
+    if (data) {
+      const param = section === "projects" ? "project" : "experience";
+      return NextResponse.redirect(
+        new URL(localizedPath(`/${section}`, data.language, { [param]: data.id }), request.url),
+        308,
+      );
+    }
+  }
 
   const { data: { user } } = await supabase.auth.getUser();
 

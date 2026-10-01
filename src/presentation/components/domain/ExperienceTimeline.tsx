@@ -6,9 +6,13 @@ import { Experience } from "@/domain/entities/Experience";
 import { BlurText } from "../ui/blur-text";
 import { DecryptedText } from "../ui/decrypted-text";
 import { useLanguage } from "@/presentation/context/LanguageContext";
+import Link from "next/link";
+import { localizedPath, normalizeLanguage } from "@/lib/seo-routes.mjs";
 
-export const ExperienceTimeline = ({ experiences }: { experiences: Experience[] }) => {
-  const { t } = useLanguage();
+/** Each role links to `<basePath>?experience=<id>`, which opens the experience popup. */
+export const ExperienceTimeline = ({ experiences, basePath = "/" }: { experiences: Experience[]; basePath?: string }) => {
+  const { t, language } = useLanguage();
+  const detailHref = (id: string) => localizedPath(basePath, normalizeLanguage(language), { experience: id });
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -87,7 +91,7 @@ export const ExperienceTimeline = ({ experiences }: { experiences: Experience[] 
                         className="text-right pr-10"
                     >
                          <h3 className="text-2xl mb-2 font-bold text-zinc-800 dark:text-zinc-200">
-                            <div>{item.role}</div>
+                            <Link href={detailHref(item.id)} scroll={false} className="hover:underline underline-offset-4">{item.role}</Link>
                             <div className="text-indigo-600">@ {item.company}</div>
                         </h3>
                          <div className="flex flex-wrap gap-2 mb-4 justify-end">
@@ -154,7 +158,7 @@ export const ExperienceTimeline = ({ experiences }: { experiences: Experience[] 
                         className="text-left pl-10"
                     >
                          <h3 className="text-2xl mb-2 font-bold text-zinc-800 dark:text-zinc-200">
-                            <div>{item.role}</div>
+                            <Link href={detailHref(item.id)} scroll={false} className="hover:underline underline-offset-4">{item.role}</Link>
                             <div className="text-indigo-600">@ {item.company}</div>
                         </h3>
                          <div className="flex flex-wrap gap-2 mb-4 justify-start">
@@ -185,7 +189,7 @@ export const ExperienceTimeline = ({ experiences }: { experiences: Experience[] 
                 </div>
                 
                 <h3 className="text-2xl mb-4 text-left font-bold text-zinc-800 dark:text-zinc-200">
-                  <div>{item.role}</div>
+                  <Link href={detailHref(item.id)} scroll={false} className="hover:underline underline-offset-4">{item.role}</Link>
                   <div className="text-indigo-600">@ {item.company}</div>
                 </h3>
 

@@ -3,10 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/presentation/context/LanguageContext";
+import { localizedPath, normalizeLanguage } from "@/lib/seo-routes.mjs";
 
 export function Footer() {
     const { t, language } = useLanguage();
     const currentYear = new Date().getFullYear();
+    const lang = normalizeLanguage(language);
 
     return (
         <footer className="print:hidden bg-zinc-50/80 dark:bg-zinc-900/60 backdrop-blur-sm border-t border-zinc-200 dark:border-zinc-800 py-16">
@@ -18,11 +20,11 @@ export function Footer() {
                     </div>
 
                     <div className="flex gap-8 text-base font-medium text-zinc-600 dark:text-zinc-400">
-                        <Link href="/#experiences" className="hover:text-indigo-600 transition-colors">{t('nav.experiences')}</Link>
-                        <Link href="/#projects" className="hover:text-indigo-600 transition-colors">{t('nav.projects')}</Link>
-                        <Link href="/#contact" className="hover:text-indigo-600 transition-colors">{t('nav.contact')}</Link>
-                        <Link href="/about" className="hover:text-indigo-600 transition-colors">{t('nav.about')}</Link>
-                        <Link href={`/cv?lang=${language}`} className="hover:text-indigo-600 transition-colors">{t('nav.cv')}</Link>
+                        <Link href={localizedPath("/experiences", lang)} className="hover:text-indigo-600 transition-colors">{t('nav.experiences')}</Link>
+                        <Link href={localizedPath("/projects", lang)} className="hover:text-indigo-600 transition-colors">{t('nav.projects')}</Link>
+                        <Link href={localizedPath("/contact", lang)} className="hover:text-indigo-600 transition-colors">{t('nav.contact')}</Link>
+                        <Link href={localizedPath("/about", lang)} className="hover:text-indigo-600 transition-colors">{t('nav.about')}</Link>
+                        <Link href={localizedPath("/cv", lang)} className="hover:text-indigo-600 transition-colors">{t('nav.cv')}</Link>
                     </div>
                 </div>
                 
