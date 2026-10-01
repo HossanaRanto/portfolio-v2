@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Service } from "@/domain/entities/Service";
 import { createServiceAction, updateServiceAction } from "@/application/use-cases/service.actions";
 import { Loader2 } from "lucide-react";
+import { parseTags } from "@/lib/tags";
 
 export function ServiceForm({ service }: { service?: Service }) {
     const [loading, setLoading] = useState(false);
@@ -21,6 +22,7 @@ export function ServiceForm({ service }: { service?: Service }) {
                 description: formData.get('description') as string,
                 icon: formData.get('icon') as string,
                 language: formData.get('language') as string,
+                tags: parseTags(formData.get('tags') as string),
             };
 
             if (service) {
@@ -86,6 +88,17 @@ export function ServiceForm({ service }: { service?: Service }) {
                     placeholder="Describe the service..."
                     className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                 />
+            </div>
+
+            <div className="space-y-2">
+                <label className="text-sm font-medium">Tags</label>
+                <input
+                    name="tags"
+                    defaultValue={service?.tags?.join(', ')}
+                    placeholder="Comma separated, e.g. Portfolio, SaaS, Madagascar"
+                    className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
+                />
+                <p className="text-xs text-zinc-500">Custom SEO keywords for this service.</p>
             </div>
 
             <div className="pt-4 flex justify-end gap-2">

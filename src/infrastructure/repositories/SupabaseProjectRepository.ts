@@ -24,6 +24,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
             status: (data.status as Project['status']) || 'IN_PROGRESS',
             featured: data.featured || false,
             language: data.language || 'en',
+            tags: data.tags || [],
             createdAt: new Date(data.created_at),
             updatedAt: new Date(data.updated_at)
         };
@@ -46,6 +47,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
         if (project.status !== undefined) payload.status = project.status;
         if (project.featured !== undefined) payload.featured = project.featured;
         if (project.language !== undefined) payload.language = project.language;
+        if (project.tags !== undefined) payload.tags = project.tags;
 
         return payload;
     }
@@ -117,6 +119,7 @@ export class SupabaseProjectRepository implements IProjectRepository {
         if (project.status !== undefined) dbData.status = project.status;
         if (project.featured !== undefined) dbData.featured = project.featured;
         if (project.language !== undefined) dbData.language = project.language;
+        if (project.tags !== undefined) dbData.tags = project.tags;
         
         dbData.updated_at = new Date().toISOString();
 

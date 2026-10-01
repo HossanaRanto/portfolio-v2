@@ -10,5 +10,7 @@ export interface Experience {
     logo?: string;
     technologies?: string[];
     language: string;
+    /** Custom SEO tags, merged with technologies (see mergeTags) */
+    tags: string[];
     createdAt: Date;
 }

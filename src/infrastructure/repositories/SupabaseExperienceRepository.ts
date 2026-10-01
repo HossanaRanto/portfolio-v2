@@ -22,6 +22,7 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
             logo: data.logo || undefined,
             technologies: data.technologies || [],
             language: data.language || 'en',
+            tags: data.tags || [],
             createdAt: new Date(data.created_at),
         };
     }
@@ -60,6 +61,7 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
             logo: experience.logo,
             technologies: experience.technologies,
             language: experience.language,
+            tags: experience.tags,
         };
         const { data, error } = await supabase.from('experiences').insert(dbData).select().single();
         if (error) throw new Error(error.message);
@@ -79,6 +81,7 @@ export class SupabaseExperienceRepository implements IExperienceRepository {
         if (experience.logo !== undefined) dbData.logo = experience.logo;
         if (experience.technologies !== undefined) dbData.technologies = experience.technologies;
         if (experience.language !== undefined) dbData.language = experience.language;
+        if (experience.tags !== undefined) dbData.tags = experience.tags;
 
         const { data, error } = await supabase.from('experiences').update(dbData).eq('id', id).select().single();
         if (error) throw new Error(error.message);

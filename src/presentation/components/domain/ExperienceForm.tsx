@@ -7,6 +7,7 @@ import { uploadImageAction } from "@/application/use-cases/storage.actions";
 import { createExperienceAction, updateExperienceAction } from "@/application/use-cases/experience.actions";
 import { Upload } from "lucide-react";
 import Image from "next/image";
+import { parseTags } from "@/lib/tags";
 
 export function ExperienceForm({ experience }: { experience?: Experience }) {
     const [loading, setLoading] = useState(false);
@@ -56,6 +57,7 @@ export function ExperienceForm({ experience }: { experience?: Experience }) {
                 endDate: endDateStr ? new Date(endDateStr) : null,
                 description: (formData.get('description') as string).split('\n').map(l => l.trim()).filter(Boolean),
                 technologies: (formData.get('technologies') as string).split(',').map(t => t.trim()).filter(Boolean),
+                tags: parseTags(formData.get('tags') as string),
                 logo: logoUrl,
                 language: formData.get('language') as string,
             };
@@ -177,6 +179,18 @@ export function ExperienceForm({ experience }: { experience?: Experience }) {
                     className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                 />
             </div>
+
+            <div className="space-y-2">
+                <label className="text-sm font-medium">Tags</label>
+                <input
+                    name="tags"
+                    defaultValue={experience?.tags?.join(', ')}
+                    placeholder="Comma separated, e.g. Portfolio, SaaS, Madagascar"
+                    className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
+                />
+                <p className="text-xs text-zinc-500">Custom SEO keywords. The technologies above are always included as tags.</p>
+            </div>
+
 
             <div className="space-y-2">
                 <label className="text-sm font-medium block">Company Logo</label>

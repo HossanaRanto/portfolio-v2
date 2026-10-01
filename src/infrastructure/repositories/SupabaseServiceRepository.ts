@@ -16,6 +16,7 @@ export class SupabaseServiceRepository implements IServiceRepository {
             description: data.description,
             icon: data.icon,
             language: data.language || 'en',
+            tags: data.tags || [],
             createdAt: new Date(data.created_at),
             updatedAt: new Date(data.updated_at),
         };
@@ -29,6 +30,7 @@ export class SupabaseServiceRepository implements IServiceRepository {
         };
         
         if (service.language !== undefined) payload.language = service.language;
+        if (service.tags !== undefined) payload.tags = service.tags;
         return payload;
     }
 
@@ -68,6 +70,7 @@ export class SupabaseServiceRepository implements IServiceRepository {
             ...service.description && { description: service.description },
             ...service.icon && { icon: service.icon },
             ...service.language && { language: service.language },
+            ...service.tags && { tags: service.tags },
             updated_at: new Date().toISOString()
         };
 

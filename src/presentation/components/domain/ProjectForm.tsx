@@ -9,6 +9,7 @@ import { Upload, X } from "lucide-react";
 import Image from "next/image";
 import { RichTextEditor } from "@/presentation/components/admin/RichTextEditor";
 import { toPlainText } from "@/lib/rich-text";
+import { parseTags } from "@/lib/tags";
 
 /** Pre-fills a new project from an existing one, switched to the other language. */
 function asTranslationOf(original: Project): Project {
@@ -100,6 +101,7 @@ export function ProjectForm({ project, duplicateFrom }: { project?: Project; dup
                 status: formData.get('status') as Project['status'],
                 featured: formData.get('featured') === 'on',
                 technologies: (formData.get('technologies') as string).split(',').map(t => t.trim()).filter(Boolean),
+                tags: parseTags(formData.get('tags') as string),
                 demoUrl: formData.get('demoUrl') as string,
                 repoUrl: formData.get('repoUrl') as string,
                 language: formData.get('language') as string,
@@ -245,6 +247,18 @@ export function ProjectForm({ project, duplicateFrom }: { project?: Project; dup
                     className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                 />
             </div>
+
+            <div className="space-y-2">
+                <label className="text-sm font-medium">Tags</label>
+                <input
+                    name="tags"
+                    defaultValue={source?.tags?.join(', ')}
+                    placeholder="Comma separated, e.g. Portfolio, SaaS, Madagascar"
+                    className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
+                />
+                <p className="text-xs text-zinc-500">Custom SEO keywords. The technologies above are always included as tags.</p>
+            </div>
+
 
              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">

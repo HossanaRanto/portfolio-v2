@@ -24,6 +24,7 @@ export interface Database {
           status: 'IN_PROGRESS' | 'COMPLETED' | 'ARCHIVED'
           featured: boolean
           language: string
+          tags: string[]
           created_at: string
           updated_at: string
         }
@@ -41,6 +42,7 @@ export interface Database {
           status?: 'IN_PROGRESS' | 'COMPLETED' | 'ARCHIVED'
           featured?: boolean
           language?: string
+          tags?: string[]
           created_at?: string
           updated_at?: string
         }
@@ -58,6 +60,7 @@ export interface Database {
           status?: 'IN_PROGRESS' | 'COMPLETED' | 'ARCHIVED'
           featured?: boolean
           language?: string
+          tags?: string[]
           created_at?: string
           updated_at?: string
         }
@@ -75,6 +78,7 @@ export interface Database {
           logo: string | null
           technologies: string[] | null
           language: string
+          tags: string[]
           created_at: string
         }
         Insert: {
@@ -89,6 +93,7 @@ export interface Database {
           logo?: string | null
           technologies?: string[] | null
           language?: string
+          tags?: string[]
           created_at?: string
         }
         Update: {
@@ -103,6 +108,7 @@ export interface Database {
           logo?: string | null
           technologies?: string[] | null
           language?: string
+          tags?: string[]
           created_at?: string
         }
       }
@@ -145,6 +151,7 @@ export interface Database {
           description: string
           icon: string
           language: string
+          tags: string[]
           created_at: string
           updated_at: string
         }
@@ -154,6 +161,7 @@ export interface Database {
           description: string
           icon: string
           language?: string
+          tags?: string[]
           created_at?: string
           updated_at?: string
         }
@@ -163,6 +171,7 @@ export interface Database {
           description?: string
           icon?: string
           language?: string
+          tags?: string[]
           created_at?: string
           updated_at?: string
         }
