@@ -5,9 +5,13 @@ import { localizedPath } from "@/lib/seo-routes.mjs";
 const AUTHORIZED_EMAIL = process.env.AUTHORIZED_EMAIL || "";
 
 export async function proxy(request: NextRequest) {
+  // Lets the root layout set <html lang> from the ?lang parameter
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-lang", request.nextUrl.searchParams.get("lang") === "fr" ? "fr" : "en");
+
   let response = NextResponse.next({
     request: {
-      headers: request.headers,
+      headers: requestHeaders,
     },
   });
 
@@ -25,7 +29,7 @@ export async function proxy(request: NextRequest) {
           );
           response = NextResponse.next({
             request: {
-              headers: request.headers,
+              headers: requestHeaders,
             },
           });
           cookiesToSet.forEach(({ name, value, options }) =>

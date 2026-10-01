@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { buildAlternates, localizedPath, normalizeLanguage, OG_LOCALES } from "@/lib/seo";
 import { getProfileAction, getProfilePhotoAction } from "@/application/use-cases/profile.actions";
 import { getExperiencesAction } from "@/application/use-cases/experience.actions";
 import { getSkillsAction } from "@/application/use-cases/skill.actions";
@@ -14,20 +15,15 @@ type Props = {
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
-  const lang = (params.lang as string) || 'en';
+  const lang = normalizeLanguage(params.lang as string);
 
   return {
     title: "CV",
     description: lang === 'fr'
       ? "Curriculum vitae de Ranto Mahefaniaina, Développeur Full Stack."
       : "Resume of Ranto Mahefaniaina, Full Stack Developer.",
-    alternates: {
-      canonical: '/cv',
-      languages: {
-        'en': '/cv?lang=en',
-        'fr': '/cv?lang=fr',
-      },
-    },
+    alternates: buildAlternates('/cv', lang),
+    openGraph: { url: localizedPath('/cv', lang), locale: OG_LOCALES[lang] },
   };
 }
 

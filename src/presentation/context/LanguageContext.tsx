@@ -20,6 +20,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     // Derived state from URL search params
     const language = (searchParams.get('lang') || 'en') as Language;
 
+    // Keep <html lang> in sync after client-side language switches
+    useEffect(() => {
+        document.documentElement.lang = language;
+    }, [language]);
+
     const setLanguage = (lang: Language) => {
         const newParams = new URLSearchParams(searchParams.toString());
         newParams.set('lang', lang);
