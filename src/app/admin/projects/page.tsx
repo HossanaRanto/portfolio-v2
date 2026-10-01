@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, Pencil, Trash } from "lucide-react";
+import { Plus, Pencil, Trash, Copy } from "lucide-react";
 import { getProjectsAction, deleteProjectAction } from "@/application/use-cases/project.actions";
 
 export default async function AdminProjectsPage() {
@@ -19,6 +19,7 @@ export default async function AdminProjectsPage() {
                     <thead className="bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 uppercase text-xs font-semibold">
                         <tr>
                             <th className="px-6 py-4">Title</th>
+                            <th className="px-6 py-4">Lang</th>
                             <th className="px-6 py-4">Status</th>
                             <th className="px-6 py-4">Featured</th>
                             <th className="px-6 py-4 text-right">Actions</th>
@@ -27,11 +28,16 @@ export default async function AdminProjectsPage() {
                     <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
                         {projects.length === 0 ? (
                             <tr>
-                                <td colSpan={4} className="px-6 py-8 text-center text-zinc-500">No projects found. Add one to get started.</td>
+                                <td colSpan={5} className="px-6 py-8 text-center text-zinc-500">No projects found. Add one to get started.</td>
                             </tr>
                         ) : projects.map(project => (
                             <tr key={project.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
                                 <td className="px-6 py-4 font-medium sm:max-w-xs truncate" title={project.title}>{project.title}</td>
+                                <td className="px-6 py-4">
+                                    <span className="px-2 py-0.5 rounded-full text-xs font-medium uppercase bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
+                                        {project.language}
+                                    </span>
+                                </td>
                                 <td className="px-6 py-4">
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium border ${
                                         project.status === 'COMPLETED' ? 'bg-green-100 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800' :
@@ -50,6 +56,14 @@ export default async function AdminProjectsPage() {
                                 </td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2 text-sm">
+                                        <Link
+                                            href={`/admin/projects/new?from=${project.id}`}
+                                            title="Duplicate (e.g. to translate)"
+                                            aria-label="Duplicate"
+                                            className="p-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors"
+                                        >
+                                            <Copy size={18} />
+                                        </Link>
                                         <Link href={`/admin/projects/${project.id}/edit`} className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors">
                                             <Pencil size={18} />
                                         </Link>

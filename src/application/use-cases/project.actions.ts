@@ -19,6 +19,10 @@ export async function getProjectBySlugAction(slug: string): Promise<Project | nu
     return await projectRepo.getBySlug(slug)
 }
 
+export async function getProjectByIdAction(id: string): Promise<Project | null> {
+    return await projectRepo.getById(id)
+}
+
 export async function createProjectAction(data: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>) {
     const project = await projectRepo.create({ ...data, description: sanitizeRichText(data.description) })
     revalidatePath('/projects')

@@ -10,11 +10,20 @@ import Image from "next/image";
 import { RichTextEditor } from "@/presentation/components/admin/RichTextEditor";
 import { toPlainText } from "@/lib/rich-text";
 
-export function ProjectForm({ project }: { project?: Project }) {
+/** Pre-fills a new project from an existing one, switched to the other language. */
+function asTranslationOf(original: Project): Project {
+    const language = original.language === 'fr' ? 'en' : 'fr';
+    const baseSlug = original.slug.replace(/-(en|fr)$/, '');
+    return { ...original, language, slug: `${baseSlug}-${language}` };
+}
+
+export function ProjectForm({ project, duplicateFrom }: { project?: Project; duplicateFrom?: Project }) {
+    // Values shown in the form: the project being edited, or the copy being translated
+    const source = project ?? (duplicateFrom && asTranslationOf(duplicateFrom));
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const [preview, setPreview] = useState<string | null>(project?.coverImage || null);
-    const [galleryPreviews, setGalleryPreviews] = useState<string[]>(project?.images || []);
+    const [preview, setPreview] = useState<string | null>(source?.coverImage || null);
+    const [galleryPreviews, setGalleryPreviews] = useState<string[]>(source?.images || []);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -50,7 +59,7 @@ export function ProjectForm({ project }: { project?: Project }) {
         try {
              // Handle Cover Image Upload
             const coverFile = formData.get('cover_file') as File;
-            let coverUrl = project?.coverImage || "";
+            let coverUrl = source?.coverImage || "";
             
             if (coverFile && coverFile.size > 0) {
                 const uploadFormData = new FormData();
@@ -120,7 +129,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                 <label className="text-sm font-medium">Language</label>
                 <select 
                     name="language" 
-                    defaultValue={project?.language || 'en'}
+                    defaultValue={source?.language || 'en'}
                     className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                 >
                     <option value="en">English (en)</option>
@@ -134,7 +143,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                     <label className="text-sm font-medium">Title</label>
                     <input 
                         name="title" 
-                        defaultValue={project?.title} 
+                        defaultValue={source?.title} 
                         required 
                         className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                     />
@@ -143,7 +152,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                     <label className="text-sm font-medium">Slug</label>
                     <input 
                         name="slug" 
-                        defaultValue={project?.slug} 
+                        defaultValue={source?.slug} 
                         required 
                         className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                     />
@@ -152,7 +161,7 @@ export function ProjectForm({ project }: { project?: Project }) {
 
             <div className="space-y-2">
                 <label className="text-sm font-medium">Description</label>
-                <RichTextEditor name="description" defaultValue={project?.description} />
+                <RichTextEditor name="description" defaultValue={source?.description} />
             </div>
 
             <div className="space-y-2">
@@ -207,7 +216,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                     <label className="text-sm font-medium">Status</label>
                     <select 
                         name="status" 
-                        defaultValue={project?.status || 'IN_PROGRESS'}
+                        defaultValue={source?.status || 'IN_PROGRESS'}
                         className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                     >
                         <option value="IN_PROGRESS">In Progress</option>
@@ -220,7 +229,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                         type="checkbox" 
                         name="featured" 
                         id="featured" 
-                        defaultChecked={project?.featured}
+                        defaultChecked={source?.featured}
                         className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
                     <label htmlFor="featured" className="text-sm font-medium">Featured Project</label>
@@ -231,7 +240,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                 <label className="text-sm font-medium">Technologies (comma separated)</label>
                 <input 
                     name="technologies" 
-                    defaultValue={project?.technologies.join(', ')} 
+                    defaultValue={source?.technologies.join(', ')} 
                     placeholder="React, Next.js, TypeScript"
                     className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                 />
@@ -243,7 +252,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                     <input 
                         name="demoUrl" 
                         type="url"
-                        defaultValue={project?.demoUrl} 
+                        defaultValue={source?.demoUrl} 
                         className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                     />
                 </div>
@@ -252,7 +261,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                     <input 
                         name="repoUrl" 
                         type="url"
-                        defaultValue={project?.repoUrl} 
+                        defaultValue={source?.repoUrl} 
                         className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
                     />
                 </div>
@@ -262,7 +271,7 @@ export function ProjectForm({ project }: { project?: Project }) {
                 <label className="text-sm font-medium">Content (Markdown)</label>
                 <textarea 
                     name="content" 
-                    defaultValue={project?.content} 
+                    defaultValue={source?.content} 
                     rows={10}
                     className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent font-mono text-sm"
                 />
