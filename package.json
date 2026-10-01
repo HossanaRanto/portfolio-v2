@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run seo:generate && next build",
     "start": "next start",
     "lint": "eslint",
     "db:push": "supabase db push",
+    "seo:generate": "node scripts/generate-seo.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
