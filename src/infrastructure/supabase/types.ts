@@ -167,6 +167,108 @@ export interface Database {
           updated_at?: string
         }
       }
+      skills: {
+        Row: {
+          id: string
+          name: string
+          category: string
+          color: string
+          logo: string | null
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          category?: string
+          color?: string
+          logo?: string | null
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          category?: string
+          color?: string
+          logo?: string | null
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      profiles: {
+        Row: {
+          language: string
+          full_name: string
+          headline: string
+          summary: string
+          location: string | null
+          email: string | null
+          phone: string | null
+          website: string | null
+          linkedin: string | null
+          github: string | null
+          education: Json
+          spoken_languages: Json
+          soft_skills: string[]
+          interests: string[]
+          updated_at: string
+        }
+        Insert: {
+          language: string
+          full_name?: string
+          headline?: string
+          summary?: string
+          location?: string | null
+          email?: string | null
+          phone?: string | null
+          website?: string | null
+          linkedin?: string | null
+          github?: string | null
+          education?: Json
+          spoken_languages?: Json
+          soft_skills?: string[]
+          interests?: string[]
+          updated_at?: string
+        }
+        Update: {
+          language?: string
+          full_name?: string
+          headline?: string
+          summary?: string
+          location?: string | null
+          email?: string | null
+          phone?: string | null
+          website?: string | null
+          linkedin?: string | null
+          github?: string | null
+          education?: Json
+          spoken_languages?: Json
+          soft_skills?: string[]
+          interests?: string[]
+          updated_at?: string
+        }
+      }
+      settings: {
+        Row: {
+          key: string
+          value: string | null
+          updated_at: string
+        }
+        Insert: {
+          key: string
+          value?: string | null
+          updated_at?: string
+        }
+        Update: {
+          key?: string
+          value?: string | null
+          updated_at?: string
+        }
+      }
     }
   }
 }
