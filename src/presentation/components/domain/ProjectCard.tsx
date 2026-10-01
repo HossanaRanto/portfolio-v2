@@ -1,5 +1,6 @@
 "use client"
 import { Project } from "@/domain/entities/Project";
+import { toPlainText } from "@/lib/rich-text";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -58,7 +59,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
               </div>
 
               <p className="mb-6 line-clamp-2 flex-1 text-sm text-zinc-600 dark:text-zinc-300">
-                {project.description}
+                {toPlainText(project.description)}
               </p>
 
               {/* Tags */}

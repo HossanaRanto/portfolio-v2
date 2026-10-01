@@ -3,6 +3,7 @@
 import { SupabaseProjectRepository } from "@/infrastructure/repositories/SupabaseProjectRepository"
 import { Project } from "@/domain/entities/Project"
 import { revalidatePath } from "next/cache"
+import { sanitizeRichText } from "@/infrastructure/services/RichTextSanitizer"
 
 const projectRepo = new SupabaseProjectRepository()
 
@@ -19,7 +20,7 @@ export async function getProjectBySlugAction(slug: string): Promise<Project | nu
 }
 
 export async function createProjectAction(data: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>) {
-    const project = await projectRepo.create(data)
+    const project = await projectRepo.create({ ...data, description: sanitizeRichText(data.description) })
     revalidatePath('/projects')
     revalidatePath('/')
     revalidatePath('/admin/projects')
@@ -27,7 +28,10 @@ export async function createProjectAction(data: Omit<Project, 'id' | 'createdAt'
 }
 
 export async function updateProjectAction(id: string, data: Partial<Project>) {
-    const project = await projectRepo.update(id, data)
+    const project = await projectRepo.update(id, {
+        ...data,
+        ...(data.description !== undefined && { description: sanitizeRichText(data.description) }),
+    })
     revalidatePath('/projects')
     revalidatePath('/')
     revalidatePath('/admin/projects')

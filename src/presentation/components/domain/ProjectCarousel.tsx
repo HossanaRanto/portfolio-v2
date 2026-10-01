@@ -1,6 +1,7 @@
 "use client"
 import useEmblaCarousel from 'embla-carousel-react'
 import { Project } from "@/domain/entities/Project";
+import { toPlainText } from "@/lib/rich-text";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -38,7 +39,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
                                         </div>
                                     </div>
                                     <p className="text-zinc-500 dark:text-zinc-400 text-sm line-clamp-2 mb-4 flex-1">
-                                        {project.description}
+                                        {toPlainText(project.description)}
                                     </p>
                                     <div className="flex flex-wrap gap-2">
                                         {project.technologies.slice(0, 3).map(t => (

@@ -1,4 +1,5 @@
 import { Project } from "@/domain/entities/Project";
+import { RichText } from "@/presentation/components/ui/rich-text";
 import Image from "next/image";
 import Link from "next/link";
 import { Github, Globe } from "lucide-react";
@@ -17,9 +18,7 @@ export function ProjectDetails({ project }: { project: Project }) {
                 <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50">
                     {project.title}
                 </h2>
-                <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-                    {project.description}
-                </p>
+                <RichText html={project.description} className="text-left text-zinc-400 text-lg max-w-2xl mx-auto [&_h2]:text-zinc-100 [&_h3]:text-zinc-100 [&_strong]:text-zinc-200" />
              </div>
 
             {/* Gallery Carousel */}

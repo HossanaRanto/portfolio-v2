@@ -7,6 +7,8 @@ import { uploadImageAction } from "@/application/use-cases/storage.actions";
 import { createProjectAction, updateProjectAction } from "@/application/use-cases/project.actions";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
+import { RichTextEditor } from "@/presentation/components/admin/RichTextEditor";
+import { toPlainText } from "@/lib/rich-text";
 
 export function ProjectForm({ project }: { project?: Project }) {
     const [loading, setLoading] = useState(false);
@@ -39,6 +41,12 @@ export function ProjectForm({ project }: { project?: Project }) {
         setLoading(true);
         const formData = new FormData(e.currentTarget);
         
+        if (!toPlainText(formData.get('description') as string)) {
+            alert('Description is required.');
+            setLoading(false);
+            return;
+        }
+
         try {
              // Handle Cover Image Upload
             const coverFile = formData.get('cover_file') as File;
@@ -144,13 +152,7 @@ export function ProjectForm({ project }: { project?: Project }) {
 
             <div className="space-y-2">
                 <label className="text-sm font-medium">Description</label>
-                <textarea 
-                    name="description" 
-                    defaultValue={project?.description} 
-                    required 
-                    rows={3}
-                    className="w-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent"
-                />
+                <RichTextEditor name="description" defaultValue={project?.description} />
             </div>
 
             <div className="space-y-2">

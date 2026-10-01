@@ -1,4 +1,5 @@
 import { getProjectBySlugAction, getProjectsAction } from "@/application/use-cases/project.actions";
+import { toPlainText } from "@/lib/rich-text";
 import { ProjectDetails } from "@/presentation/components/domain/ProjectDetails";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -26,17 +27,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     return {
         title: `${project.title} | Ranto Mahefaniaina`,
-        description: project.description,
+        description: toPlainText(project.description),
         openGraph: {
             title: project.title,
-            description: project.description,
+            description: toPlainText(project.description),
             images: project.coverImage ? [project.coverImage] : [],
             type: 'article', // or 'website'
         },
         twitter: {
             card: 'summary_large_image',
             title: project.title,
-            description: project.description,
+            description: toPlainText(project.description),
             images: project.coverImage ? [project.coverImage] : [],
         },
         alternates: {
@@ -58,7 +59,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
         name: project.title,
-        description: project.description,
+        description: toPlainText(project.description),
         image: project.coverImage,
         applicationCategory: 'Web Application',
         operatingSystem: 'Any',
