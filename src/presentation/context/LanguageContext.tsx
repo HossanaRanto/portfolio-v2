@@ -33,6 +33,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             'nav.about': { en: 'About', fr: 'À Propos' },
             'nav.contact': { en: 'Contact', fr: 'Contact' },
             'nav.experiences': { en: 'Experiences', fr: 'Expériences' },
+            'nav.cv': { en: 'CV', fr: 'CV' },
             'hero.title': { en: 'Building Digital Experiences', fr: 'Création d\'Expériences Numériques' },
             'hero.subtitle': { en: 'Full Stack Developer', fr: 'Développeur Full Stack' },
             'hero.cta': { en: 'View Work', fr: 'Voir mes projets' },

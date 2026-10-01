@@ -27,11 +27,12 @@ export function PublicNavbar() {
         { href: "/#projects", label: t('nav.projects') },
         { href: "/#contact", label: t('nav.contact') },
         { href: "/about", label: t('nav.about') },
+        { href: `/cv?lang=${language}`, label: t('nav.cv') },
     ];
 
     return (
         <header 
-            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+            className={`print:hidden fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
                 scrolled ? "bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm border-b border-zinc-200/50 dark:border-zinc-800/50 py-3" : "bg-transparent py-5"
             }`}
         >
@@ -48,7 +49,7 @@ export function PublicNavbar() {
                             key={link.href} 
                             href={link.href}
                             className={`text-sm font-medium hover:text-indigo-600 transition-colors ${
-                                pathname === link.href ? "text-indigo-600" : "text-zinc-600 dark:text-zinc-300"
+                                pathname === link.href.split("?")[0] ? "text-indigo-600" : "text-zinc-600 dark:text-zinc-300"
                             }`}
                         >
                             {link.label}
@@ -96,7 +97,7 @@ export function PublicNavbar() {
                                     href={link.href}
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={`text-lg font-medium ${
-                                        pathname === link.href ? "text-indigo-600" : "text-zinc-600 dark:text-zinc-300"
+                                        pathname === link.href.split("?")[0] ? "text-indigo-600" : "text-zinc-600 dark:text-zinc-300"
                                     }`}
                                 >
                                     {link.label}

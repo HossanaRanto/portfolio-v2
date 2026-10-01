@@ -5,11 +5,11 @@ import Image from "next/image";
 import { useLanguage } from "@/presentation/context/LanguageContext";
 
 export function Footer() {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-zinc-50/80 dark:bg-zinc-900/60 backdrop-blur-sm border-t border-zinc-200 dark:border-zinc-800 py-16">
+        <footer className="print:hidden bg-zinc-50/80 dark:bg-zinc-900/60 backdrop-blur-sm border-t border-zinc-200 dark:border-zinc-800 py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-3">
@@ -22,6 +22,7 @@ export function Footer() {
                         <Link href="/#projects" className="hover:text-indigo-600 transition-colors">{t('nav.projects')}</Link>
                         <Link href="/#contact" className="hover:text-indigo-600 transition-colors">{t('nav.contact')}</Link>
                         <Link href="/about" className="hover:text-indigo-600 transition-colors">{t('nav.about')}</Link>
+                        <Link href={`/cv?lang=${language}`} className="hover:text-indigo-600 transition-colors">{t('nav.cv')}</Link>
                     </div>
                 </div>
                 

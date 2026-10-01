@@ -9,7 +9,9 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      <GeometricBackground />
+      <div className="print:hidden">
+        <GeometricBackground />
+      </div>
       <PublicNavbar />
       <main>
         {children}
